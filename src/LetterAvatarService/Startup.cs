@@ -28,6 +28,8 @@ namespace LetterAvatarService {
             
             services.AddSingleton<IFontService, DefaultFontService>();
             services.AddSingleton<IPaletteService, DefaultPaletteService>();
+            services.AddSingleton<IBlobCacheService, DefaultBlobCacheService>();
+            //services.AddSingleton<IBlobCacheService, AzureBlobCacherService>();
             services.AddTransient<IAvatarService, AvatarService>();
         }
 

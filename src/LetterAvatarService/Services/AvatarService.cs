@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
 using SixLabors.Fonts;
@@ -15,15 +16,20 @@ namespace LetterAvatarService.Services {
     public class AvatarService : IAvatarService {
         private readonly IPaletteService _paletteService;
         private readonly IFontService _fontService;
+        private readonly IBlobCacheService _cacheService;
         private readonly ILogger<AvatarService> _log;
 
-        public AvatarService(IPaletteService paletteService, IFontService fontService, ILogger<AvatarService> log) {
+        public AvatarService(IPaletteService paletteService,
+                             IFontService fontService,
+                             IBlobCacheService cacheService,
+                             ILogger<AvatarService> log) {
             _paletteService = paletteService;
             _fontService = fontService;
+            _cacheService = cacheService;
             _log = log;
         }
 
-        public byte[] GenerateAvatar(string name, Int32 squareSize, float fontSize) {
+        public async Task<byte[]> GenerateAvatar(string name, Int32 squareSize, Int32 fontSize) {
             name = CleanName(name);
             if(string.IsNullOrWhiteSpace(name))
                 return null;
@@ -31,6 +37,12 @@ namespace LetterAvatarService.Services {
             var text = GetText(name);
             if(string.IsNullOrWhiteSpace(text))
                 return null;
+
+            var cacheKey = GetCacheKey(name, squareSize, fontSize);
+
+            var cachedBlob = await _cacheService.GetBlob(cacheKey);
+            if(cachedBlob != null)
+                return cachedBlob;
 
             var backgroundColor = _paletteService.GetColorForString(name);
 
@@ -43,6 +55,7 @@ namespace LetterAvatarService.Services {
             var textPosition = new PointF(squareSize / 2f - glyphs.Bounds.Width / 2, squareSize / 2f - glyphs.Bounds.Height / 2f);
             glyphs = glyphs.Translate(textPosition);
 
+            byte[] buffer;
             using(var img = new Image<Rgba32>(squareSize, squareSize)) {
                 var graphicsOptions = new GraphicsOptions(true);
 
@@ -53,9 +66,16 @@ namespace LetterAvatarService.Services {
                 using(var ms = new MemoryStream()) {
                     img.SaveAsPng(ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    return ms.ToArray();
+                    buffer = ms.ToArray();
                 }
             }
+
+            await _cacheService.StoreBlob(cacheKey, buffer);
+            return buffer;
+        }
+
+        private string GetCacheKey(string name, Int32 size, Int32 fontSize) {
+            return $"{name}|{size}|{fontSize}";
         }
 
         private string CleanName(string name) {
