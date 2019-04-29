@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
+using LetterAvatarService.Factories;
 using LetterAvatarService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +29,8 @@ namespace LetterAvatarService {
             
             services.AddSingleton<IFontService, DefaultFontService>();
             services.AddSingleton<IPaletteService, DefaultPaletteService>();
-            services.AddSingleton<IBlobCacheService, DefaultBlobCacheService>();
-            //services.AddSingleton<IBlobCacheService, AzureBlobCacherService>();
-            services.AddTransient<IAvatarService, AvatarService>();
+            services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);
+            services.AddScoped<IAvatarService, AvatarService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
