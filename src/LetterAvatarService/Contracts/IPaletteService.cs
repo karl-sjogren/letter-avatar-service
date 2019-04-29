@@ -15,7 +15,6 @@ namespace LetterAvatarService.Contracts {
                 var palette = GetPalette();
 
                 return palette[value % palette.Length];
-
             }
         }
     }
