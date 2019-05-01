@@ -17,15 +17,18 @@ namespace LetterAvatarService.Services {
         private readonly IPaletteService _paletteService;
         private readonly IFontService _fontService;
         private readonly IBlobCacheService _cacheService;
+        private readonly IStatisticsService _statisticsService;
         private readonly ILogger<AvatarService> _log;
 
         public AvatarService(IPaletteService paletteService,
                              IFontService fontService,
                              IBlobCacheService cacheService,
+                             IStatisticsService statisticsService,
                              ILogger<AvatarService> log) {
             _paletteService = paletteService;
             _fontService = fontService;
             _cacheService = cacheService;
+            _statisticsService = statisticsService;
             _log = log;
         }
 
@@ -37,6 +40,8 @@ namespace LetterAvatarService.Services {
             var text = GetText(name);
             if(string.IsNullOrWhiteSpace(text))
                 return null;
+
+            await _statisticsService.TrackHit(name, squareSize);
 
             var cacheKey = GetCacheKey(name, squareSize, fontSize);
 

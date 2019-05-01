@@ -30,6 +30,7 @@ namespace LetterAvatarService {
             services.AddSingleton<IFontService, DefaultFontService>();
             services.AddSingleton<IPaletteService, DefaultPaletteService>();
             services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);
+            services.AddScoped<IStatisticsService>(StatisticsServiceFactory.CreateInstance);
             services.AddScoped<IAvatarService, AvatarService>();
         }
 
