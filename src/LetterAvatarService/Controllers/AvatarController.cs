@@ -21,23 +21,30 @@ namespace LetterAvatarService.Controllers {
 
         [HttpGet("{name}")]
         public async Task<ActionResult> GetAvatar(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, 512, 275);
+            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 512, 275);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
         }
 
         [HttpGet("thumb/{name}")]
         public async Task<ActionResult> GetAvatarThumb(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, 64, 32);
+            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 64, 32);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
         }
 
         [HttpGet("mini/{name}")]
         public async Task<ActionResult> GetAvatarMini(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, 32, 16);
+            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 32, 16);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
+        }
+
+        [HttpGet("svg/{name}")]
+        public async Task<ActionResult> GetAvatarSvg(string name) {
+            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Svg, 512, 275);
+
+            return new FileContentResult(buffer, new MediaTypeHeaderValue("image/svg+xml"));
         }
     }
 }
