@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3EAD1FF-8C3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterAvatarService", "src\LetterAvatarService\LetterAvatarService.csproj", "{638616A6-8050-4018-B373-DB2A6076EA0E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5B80D5C5-E64A-4B33-8C64-F2C9E8414491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LetterAvatarService.Tests", "test\LetterAvatarService.Tests\LetterAvatarService.Tests.csproj", "{6B015B8E-03A6-43B5-A8FB-5868596A58B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +36,21 @@ Global
 		{638616A6-8050-4018-B373-DB2A6076EA0E}.Release|x64.Build.0 = Release|Any CPU
 		{638616A6-8050-4018-B373-DB2A6076EA0E}.Release|x86.ActiveCfg = Release|Any CPU
 		{638616A6-8050-4018-B373-DB2A6076EA0E}.Release|x86.Build.0 = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|x64.Build.0 = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|x64.ActiveCfg = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|x64.Build.0 = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{638616A6-8050-4018-B373-DB2A6076EA0E} = {A3EAD1FF-8C30-4DF0-B80C-BC328F6D9540}
+		{6B015B8E-03A6-43B5-A8FB-5868596A58B1} = {5B80D5C5-E64A-4B33-8C64-F2C9E8414491}
 	EndGlobalSection
 EndGlobal
