@@ -19,7 +19,7 @@ jobs:
   - task: DotNetCoreInstaller@0
     inputs:
       packageType: 'runtime'
-      version: '2.2.4'
+      version: '2.0.9'
   - task: DotNetCoreInstaller@0
     inputs:
       packageType: 'sdk'
