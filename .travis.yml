@@ -10,6 +10,7 @@ mono: none
 #dotnet: 3.0.100-preview4-011223
 script:
   - sudo snap alias dotnet-sdk.dotnet dotnet
+  - export PATH="$PATH:/home/travis/.dotnet/tools"
   - dotnet tool install -g Cake.Tool --version 0.33.0
   - dotnet cake --target=test
   - dotnet cake --target=publish
