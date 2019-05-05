@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.Runtime;
+using Amazon.S3;
 using LetterAvatarService.Contracts;
+using LetterAvatarService.Extensions;
 using LetterAvatarService.Factories;
 using LetterAvatarService.Services;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +29,11 @@ namespace LetterAvatarService {
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers()
                 .AddNewtonsoftJson();
-            
+
+            var awsOptions = Configuration.GetAWSOptionsWithCredentials();
+            services.AddDefaultAWSOptions(awsOptions);
+            services.AddAWSService<IAmazonS3>();
+
             services.AddSingleton<IFontService, DefaultFontService>();
             services.AddSingleton<IPaletteService, DefaultPaletteService>();
             services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);

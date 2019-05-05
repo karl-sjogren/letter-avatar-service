@@ -67,7 +67,7 @@ namespace LetterAvatarService.Services {
 
         public async Task StoreBlob(string key, byte[] buffer) {
             var sw = Stopwatch.StartNew();
-                try {
+            try {
                 var container = await CreateContainer();
 
                 var blockBlob = container.GetBlockBlobReference(key);
