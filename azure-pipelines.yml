@@ -18,6 +18,10 @@ jobs:
   - task: DotNetCoreInstaller@0
     inputs:
       version: '3.0.100-preview4-011223'
+  # Seems we need this for reportgenerator
+  - task: DotNetCoreInstaller@0
+    inputs:
+      version: '2.2.104'
   - bash: ./build.sh --target=azure-pipeline
     env:
       COREHOST_TRACE: 0
