@@ -6,7 +6,7 @@ addons:
     channel: latest/beta
 sudo: required
 language: csharp
-mono: none
+mono: 3.12.0
 #dotnet: 3.0.100-preview4-011223
 script:
   - sudo snap alias dotnet-sdk.dotnet dotnet
