@@ -15,13 +15,15 @@ jobs:
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
-  - task: DotNetCoreInstaller@0
-    inputs:
-      version: '3.0.100-preview4-011223'
   # Seems we need this for reportgenerator
   - task: DotNetCoreInstaller@0
     inputs:
+      packageType: 'runtime'
       version: '2.2.104'
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk'
+      version: '3.0.100-preview4-011223'
   - bash: ./build.sh --target=azure-pipeline
     env:
       COREHOST_TRACE: 0
@@ -48,6 +50,7 @@ jobs:
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
+      packageType: 'sdk'
       version: '3.0.100-preview4-011223'
   - powershell: .\build.ps1 -Target azure-pipeline
     env:
