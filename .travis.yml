@@ -1,5 +1,14 @@
+dist: xenial
+addons:
+  snaps:
+  - name: dotnet-sdk
+    classic: true
+    channel: latest/beta
+sudo: required
 language: csharp
 mono: none
 dotnet: 3.0.100-preview4-011223
 script:
+  - sudo snap alias dotnet-sdk.dotnet dotnet
+  - ./build.sh --target=test
   - ./build.sh --target=publish
