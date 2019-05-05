@@ -58,7 +58,7 @@ Task("test")
         DotNetCoreTest("./test/LetterAvatarService.Tests/LetterAvatarService.Tests.csproj", settings, coverletSettings);
     });
 
-Task("azure-pipeline")
+Task("azure-pipelines")
     .IsDependentOn("clean")
     .Does(() => {
         var settings = new DotNetCoreTestSettings {
