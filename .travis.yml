@@ -6,9 +6,10 @@ addons:
     channel: latest/beta
 sudo: required
 language: csharp
-mono: 3.12.0
+mono: none
 #dotnet: 3.0.100-preview4-011223
 script:
   - sudo snap alias dotnet-sdk.dotnet dotnet
-  - ./build.sh --target=test
-  - ./build.sh --target=publish
+  - dotnet tool install -g Cake.Tool --version 0.33.0
+  - dotnet cake --target=test
+  - dotnet cake --target=publish
