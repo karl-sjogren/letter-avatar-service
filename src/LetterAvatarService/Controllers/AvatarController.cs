@@ -21,30 +21,54 @@ namespace LetterAvatarService.Controllers {
 
         [HttpGet("{name}")]
         public async Task<ActionResult> GetAvatar(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 512, 275);
+            var format = GetAvatarFormat();
+            var buffer = await _avatarService.GenerateAvatar(name, format, 512, 275);
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
+            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
 
         [HttpGet("thumb/{name}")]
         public async Task<ActionResult> GetAvatarThumb(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 64, 32);
+            var format = GetAvatarFormat();
+            var buffer = await _avatarService.GenerateAvatar(name, format, 64, 32);
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
+            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
 
         [HttpGet("mini/{name}")]
         public async Task<ActionResult> GetAvatarMini(string name) {
-            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Png, 32, 16);
+            var format = GetAvatarFormat();
+            var buffer = await _avatarService.GenerateAvatar(name, format, 32, 16);
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue("image/png"));
+            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
 
         [HttpGet("svg/{name}")]
         public async Task<ActionResult> GetAvatarSvg(string name) {
             var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Svg, 512, 275);
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue("image/svg+xml"));
+            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(AvatarFormat.Svg)));
+        }
+
+        private AvatarFormat GetAvatarFormat() {
+            var acceptHeaders = Request.Headers["Accept"];
+            if(acceptHeaders.Any(header => header?.Contains("image/webp", StringComparison.OrdinalIgnoreCase) == true))
+                return AvatarFormat.WebP;
+            
+            return AvatarFormat.Png;
+        }
+
+        private string GetMimeType(AvatarFormat format) {
+            switch(format) {
+                case AvatarFormat.Png:
+                    return "image/png";
+                case AvatarFormat.WebP:
+                    return "image/webp";
+                case AvatarFormat.Svg:
+                    return "image/svg+xml";
+                default:
+                    throw new InvalidOperationException("Invalid AvatarFormat specified.");
+            }
         }
     }
 }

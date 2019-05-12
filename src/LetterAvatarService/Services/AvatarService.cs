@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
+using Shorthand.ImageSharp.WebP;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -69,6 +70,9 @@ namespace LetterAvatarService.Services {
                 case AvatarFormat.Png:
                     buffer = GeneratePNG(squareSize, Rgba32.White, backgroundColor, glyphs);
                     break;
+                case AvatarFormat.WebP:
+                    buffer = GenerateWebP(squareSize, Rgba32.White, backgroundColor, glyphs);
+                    break;
                 case AvatarFormat.Svg:
                     buffer = GenerateSVG(squareSize, Rgba32.White, backgroundColor, glyphs);
                     break;
@@ -90,6 +94,22 @@ namespace LetterAvatarService.Services {
 
                 using (var ms = new MemoryStream()) {
                     img.SaveAsPng(ms);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    return ms.ToArray();
+                }
+            }
+        }
+
+        private static byte[] GenerateWebP(int squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, IPathCollection glyphs) {
+            using (var img = new Image<Rgba32>(squareSize, squareSize)) {
+                var graphicsOptions = new GraphicsOptions(true);
+
+                img.Mutate(ctx => ctx
+                    .Fill(backgroundColor)
+                    .Fill(graphicsOptions, foregroundColor, glyphs));
+
+                using (var ms = new MemoryStream()) {
+                    img.Save(ms, new WebPEncoder());
                     ms.Seek(0, SeekOrigin.Begin);
                     return ms.ToArray();
                 }

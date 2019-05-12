@@ -12,6 +12,7 @@ namespace LetterAvatarService.Contracts {
 
     public enum AvatarFormat {
         Png,
+        WebP,
         Svg
     }
 }

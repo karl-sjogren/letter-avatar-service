@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +30,13 @@ namespace LetterAvatarService {
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers()
                 .AddNewtonsoftJson();
+
+            services.AddResponseCompression(options => {
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+                options.EnableForHttps = true;
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+            });
 
             var awsOptions = Configuration.GetAWSOptionsWithCredentials();
             services.AddDefaultAWSOptions(awsOptions);
@@ -49,8 +57,11 @@ namespace LetterAvatarService {
             }
 
             app.UseHttpsRedirection();
+
+            app.UseResponseCompression();
+
             app.UseRouting();
-            app.UseAuthorization();
+
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
