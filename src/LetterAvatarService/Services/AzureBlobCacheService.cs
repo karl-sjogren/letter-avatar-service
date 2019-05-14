@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Azure.Storage;
@@ -18,7 +19,7 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        private async Task<CloudBlobContainer> CreateContainer() {
+        private async Task<CloudBlobContainer> CreateContainer(CancellationToken cancellationToken) {
             var sw = Stopwatch.StartNew();
             try {
                 var connectionString = _configuration["AzureStorage:ConnectionString"];
@@ -28,15 +29,15 @@ namespace LetterAvatarService.Services {
                 
                 var client = storageAccount.CreateCloudBlobClient();
                 var container = client.GetContainerReference("letter-avatar-cache");
-                if(await container.ExistsAsync() == true)
+                if(await container.ExistsAsync(cancellationToken) == true)
                     return container;
 
-                await container.CreateAsync();
+                await container.CreateAsync(cancellationToken);
 
                 var permissions = new BlobContainerPermissions {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 };
-                await container.SetPermissionsAsync(permissions);
+                await container.SetPermissionsAsync(permissions, cancellationToken);
 
                 return container;
             } finally {
@@ -45,17 +46,17 @@ namespace LetterAvatarService.Services {
             }
         }
 
-        public async Task<byte[]> GetBlob(string key) {
+        public async Task<byte[]> GetBlob(string key, CancellationToken cancellationToken) {
             var sw = Stopwatch.StartNew();
             try {
-                var container = await CreateContainer();
+                var container = await CreateContainer(cancellationToken);
 
                 var blockBlob = container.GetBlockBlobReference(key);
-                if(await blockBlob.ExistsAsync() == false)
+                if(await blockBlob.ExistsAsync(cancellationToken) == false)
                     return null;
 
                 using(var ms = new MemoryStream()) {
-                    await blockBlob.DownloadToStreamAsync(ms);
+                    await blockBlob.DownloadToStreamAsync(ms, cancellationToken);
                     ms.Seek(0, SeekOrigin.Begin);
                     return ms.ToArray();
                 }
@@ -65,16 +66,16 @@ namespace LetterAvatarService.Services {
             }
         }
 
-        public async Task StoreBlob(string key, byte[] buffer) {
+        public async Task StoreBlob(string key, byte[] buffer, CancellationToken cancellationToken) {
             var sw = Stopwatch.StartNew();
             try {
-                var container = await CreateContainer();
+                var container = await CreateContainer(cancellationToken);
 
                 var blockBlob = container.GetBlockBlobReference(key);
-                if(await blockBlob.ExistsAsync() == true)
+                if(await blockBlob.ExistsAsync(cancellationToken) == true)
                     return;
                 
-                await blockBlob.UploadFromByteArrayAsync(buffer, 0, buffer.Length);
+                await blockBlob.UploadFromByteArrayAsync(buffer, 0, buffer.Length, cancellationToken);
             } finally {
                 sw.Stop();
                 _log.LogDebug($"Storing the Azure CloudBlobContainer for key {key} took {sw.Elapsed}");

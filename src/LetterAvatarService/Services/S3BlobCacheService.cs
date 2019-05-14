@@ -1,11 +1,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3;
 using LetterAvatarService.Contracts;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -21,12 +20,12 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        public async Task<byte[]> GetBlob(string key) {
+        public async Task<byte[]> GetBlob(string key, CancellationToken cancellationToken) {
             var sw = Stopwatch.StartNew();
             try {
                 try {
                     var bucketName = _configuration["AWS:BucketName"];
-                    var result = await _client.GetObjectAsync(bucketName, key, null);
+                    var result = await _client.GetObjectAsync(bucketName, key, null, cancellationToken);
 
                     using(var ms = new MemoryStream()) {
                         await result.ResponseStream.CopyToAsync(ms);
@@ -42,12 +41,12 @@ namespace LetterAvatarService.Services {
             }
         }
 
-        public async Task StoreBlob(string key, byte[] buffer) {
+        public async Task StoreBlob(string key, byte[] buffer, CancellationToken cancellationToken) {
             var sw = Stopwatch.StartNew();
             try {
                 var bucketName = _configuration["AWS:BucketName"];
                 using(var ms = new MemoryStream(buffer)) {
-                    await _client.UploadObjectFromStreamAsync(bucketName, key, ms, null);
+                    await _client.UploadObjectFromStreamAsync(bucketName, key, ms, null, cancellationToken);
                 }
             } finally {
                 sw.Stop();

@@ -1,11 +1,8 @@
-using System;
-using System.Security.Cryptography;
-using System.Text;
+using System.Threading;
 using SixLabors.Fonts;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace LetterAvatarService.Contracts {
     public interface IFontService {
-        FontFamily GetFont();
+        FontFamily GetFont(CancellationToken cancellationToken);
     }
 }

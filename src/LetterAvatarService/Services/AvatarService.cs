@@ -37,7 +37,7 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        public async Task<byte[]> GenerateAvatar(string name, AvatarFormat format, Int32 squareSize, Int32 fontSize) {
+        public async Task<byte[]> GenerateAvatar(string name, AvatarFormat format, Int32 squareSize, Int32 fontSize, CancellationToken cancellationToken) {
             name = CleanName(name);
             if (string.IsNullOrWhiteSpace(name))
                 return null;
@@ -46,17 +46,17 @@ namespace LetterAvatarService.Services {
             if (string.IsNullOrWhiteSpace(text))
                 return null;
 
-            await _statisticsService.TrackHit(name, squareSize);
+            await _statisticsService.TrackHit(name, squareSize, cancellationToken);
 
             var cacheKey = GetCacheKey(name, format, squareSize, fontSize);
 
-            var cachedBlob = await _cacheService.GetBlob(cacheKey);
+            var cachedBlob = await _cacheService.GetBlob(cacheKey, cancellationToken);
             if (cachedBlob != null)
                 return cachedBlob;
 
-            var backgroundColor = _paletteService.GetColorForString(name);
+            var backgroundColor = _paletteService.GetColorForString(name, cancellationToken);
 
-            var fontFamily = _fontService.GetFont();
+            var fontFamily = _fontService.GetFont(cancellationToken);
             var font = fontFamily.CreateFont(fontSize, FontStyle.Regular);
 
             var glyphs = TextBuilder.GenerateGlyphs(text, new RendererOptions(font, 72));
@@ -80,7 +80,7 @@ namespace LetterAvatarService.Services {
                     throw new InvalidOperationException("Invalid AvatarFormat specified.");
             }
 
-            await _cacheService.StoreBlob(cacheKey, buffer);
+            await _cacheService.StoreBlob(cacheKey, buffer, cancellationToken);
             return buffer;
         }
 

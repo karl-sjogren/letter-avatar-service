@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,7 @@ namespace LetterAvatarService.Services {
             _collection = database.GetCollection<BsonDocument>("avatar-statistics");
         }
 
-        public async Task TrackHit(string name, int size) {
+        public async Task TrackHit(string name, int size, CancellationToken cancellationToken) {
             var filterBuilder = new FilterDefinitionBuilder<BsonDocument>();
             var filter = filterBuilder.And(
                 filterBuilder.Eq("name", name),
@@ -36,7 +37,8 @@ namespace LetterAvatarService.Services {
             await _collection.UpdateOneAsync(
                 filter, 
                 update,
-                new UpdateOptions { IsUpsert = true });
+                new UpdateOptions { IsUpsert = true },
+                cancellationToken);
         }
     }
 }

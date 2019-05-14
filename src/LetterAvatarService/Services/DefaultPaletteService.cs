@@ -1,3 +1,4 @@
+using System.Threading;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp.PixelFormats;
@@ -57,6 +58,6 @@ namespace LetterAvatarService.Services {
             };
         }
 
-        public Rgba32[] GetPalette() => _palette;
+        public Rgba32[] GetPalette(CancellationToken cancellationToken) => _palette;
     }
 }

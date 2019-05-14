@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        public async Task<byte[]> GetBlob(string key) {
+        public async Task<byte[]> GetBlob(string key, CancellationToken cancellationToken) {
             var path = GetCachePath(key);
 
             var fileInfo = _fileProvider.GetFileInfo(path);
@@ -29,18 +30,18 @@ namespace LetterAvatarService.Services {
             using var stream = fileInfo.CreateReadStream();
             using var ms = new MemoryStream();
 
-            await stream.CopyToAsync(ms);
+            await stream.CopyToAsync(ms, cancellationToken);
             return ms.ToArray();
         }
 
-        public async Task StoreBlob(string key, byte[] buffer) {
+        public async Task StoreBlob(string key, byte[] buffer, CancellationToken cancellationToken) {
             var path = GetCachePath(key);
 
             var fileInfo = _fileProvider.GetFileInfo(path);
             if(fileInfo.Exists)
                 File.Delete(fileInfo.PhysicalPath);
 
-            await File.WriteAllBytesAsync(fileInfo.PhysicalPath, buffer);
+            await File.WriteAllBytesAsync(fileInfo.PhysicalPath, buffer, cancellationToken);
         }
 
         private string GetCachePath(string key) {

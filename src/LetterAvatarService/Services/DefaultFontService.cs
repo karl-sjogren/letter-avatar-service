@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
 using SixLabors.Fonts;
@@ -15,7 +16,7 @@ namespace LetterAvatarService.Services {
             _fontCollection = new FontCollection();
         }
 
-        public FontFamily GetFont() {
+        public FontFamily GetFont(CancellationToken cancellationToken) {
             if(_fontCollection.TryFind("Roboto", out var fontFamily))
                 return fontFamily;
 

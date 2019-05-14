@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
@@ -10,11 +11,11 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        public Task<byte[]> GetBlob(string key) {
+        public Task<byte[]> GetBlob(string key, CancellationToken cancellationToken) {
             return Task.FromResult((byte[])null);
         }
 
-        public Task StoreBlob(string key, byte[] buffer) {
+        public Task StoreBlob(string key, byte[] buffer, CancellationToken cancellationToken) {
             return Task.CompletedTask;
         }
     }

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatarService.Contracts;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,7 @@ namespace LetterAvatarService.Services {
             _log = log;
         }
 
-        public Task TrackHit(string name, int size) {
+        public Task TrackHit(string name, int size, CancellationToken cancellationToken) {
             return Task.CompletedTask;
         }
     }
