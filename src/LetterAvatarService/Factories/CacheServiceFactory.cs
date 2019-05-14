@@ -12,6 +12,10 @@ namespace LetterAvatarService.Factories {
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
+            if(!string.IsNullOrWhiteSpace(configuration["FileCache:Path"])) {
+                return new FileSystemBlobCacheService(configuration, loggerFactory.CreateLogger<FileSystemBlobCacheService>());
+            }
+
             if(!string.IsNullOrWhiteSpace(configuration["AWS:BucketName"])) {
                 var s3Client = serviceProvider.GetRequiredService<IAmazonS3>();
                 return new S3BlobCacheService(configuration, s3Client, loggerFactory.CreateLogger<S3BlobCacheService>());

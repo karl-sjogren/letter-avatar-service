@@ -334,3 +334,6 @@ ASALocalRun/
 
 # OSX files
 .DS_Store
+
+# Project specific files
+file-cache/
