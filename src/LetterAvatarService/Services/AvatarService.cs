@@ -109,7 +109,7 @@ namespace LetterAvatarService.Services {
                     .Fill(graphicsOptions, foregroundColor, glyphs));
 
                 using (var ms = new MemoryStream()) {
-                    img.Save(ms, new WebPEncoder());
+                    img.SaveAsWebP(ms);
                     ms.Seek(0, SeekOrigin.Begin);
                     return ms.ToArray();
                 }
