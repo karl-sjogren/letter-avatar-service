@@ -8,5 +8,11 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
 WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libxi6 \
+    libgconf-2-4
+
 COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "LetterAvatarService.dll"]
