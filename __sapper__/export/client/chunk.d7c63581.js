@@ -1,2 +1,0 @@
-function n(){}function t(n,t){return{subscribe:e(n,t).subscribe}}function e(t,e=n){let c;const o=[];function u(n){if(u=n,(e=t)!=e?u==u:e!==u||e&&"object"==typeof e||"function"==typeof e){if(t=n,!c)return;o.forEach(n=>n[1]()),o.forEach(n=>n[0](t))}var e,u}return{set:u,update:function(n){u(n(t))},subscribe:function(r,f=n){const i=[r,f];return o.push(i),1===o.length&&(c=e(u)||n),r(t),()=>{const n=o.indexOf(i);-1!==n&&o.splice(n,1),0===o.length&&c()}}}}export{e as a,t as b};
-//# sourceMappingURL=chunk.d7c63581.js.map

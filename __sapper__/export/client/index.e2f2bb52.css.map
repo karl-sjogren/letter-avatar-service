@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "file": "index.1fba087c.css",
+  "file": "index.e2f2bb52.css",
   "sources": [
     "../../../../../../src/components/avatar-preview.svelte",
     "../../../../../../src/components/preview-input.svelte",
@@ -8,9 +8,9 @@
   ],
   "sourcesContent": [
     "<script>\n  export let size, name;\n\n  let baseUrl = 'https://letter-avatars.herokuapp.com/avatars/svg/';\n  $: url = baseUrl + encodeURIComponent(name);\n</script>\n\n<style>\n  .avatar-preview-minuscule {\n    max-width: 32px\n  }\n\n  .avatar-preview-tiny {\n    max-width: 64px\n  }\n\n  .avatar-preview-small {\n    max-width: 128px\n  }\n\n  .avatar-preview-medium {\n    max-width: 256px\n  }\n\n  .avatar-preview-large {\n    max-width: 512px\n  }\n</style>\n\n<img src={url} alt={name} class=\"avatar-preview avatar-preview-{size}\" />",
-    "<script>\n  export let value;\n</script>\n\n<style>\n.preview-input {\n    width: 90%;\n    font-size: 2rem;\n    border-radius: 12px;\n    border: 6px solid #f0f8ff;\n    padding: 8px;\n    text-align: center\n}\n</style>\n\n<input type=\"text\" class=\"preview-input\" bind:value={value} />",
+    "<script>\n  import { name } from '../stores/name-store.js';\n\n  export let value;\n\n  function handleFocus() {\n    name.stopRandomGeneration();\n  }\n\n  function handleChange(event) {\n    name.setName(event.srcElement.value);\n  }\n</script>\n\n<style>\n.preview-input {\n    width: 90%;\n    font-size: 2rem;\n    border-radius: 12px;\n    border: 6px solid #f0f8ff;\n    padding: 8px;\n    text-align: center\n}\n</style>\n\n<input type=\"text\" class=\"preview-input\" value={value} on:keydown={handleChange} on:focus={handleFocus} />",
     "<script>\n  import AvatarPreview from '../components/avatar-preview.svelte';\n  import PreviewInput from '../components/preview-input.svelte';\n  import { name } from '../stores/name-store.js';\n</script>\n\n<style>\n.preview {\n\ttext-align: center\n}\n</style>\n\n<svelte:head>\n  <title>Letter Avatar Service</title>\n</svelte:head>\n\n<div class=\"preview\">\n  <div class=\"preview-images\">\n    <AvatarPreview name={$name} size=\"minuscule\" />\n    <AvatarPreview name={$name} size=\"tiny\" />\n    <AvatarPreview name={$name} size=\"small\" />\n    <AvatarPreview name={$name} size=\"medium\" />\n    <AvatarPreview name={$name} size=\"large\" />\n  </div>\n  <PreviewInput value={$name} />\n</div>\n"
   ],
   "names": [],
-  "mappings": "AAQE,yBAAyB,cAAC,CAAC,AACzB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,oBAAoB,cAAC,CAAC,AACpB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,sBAAsB,cAAC,CAAC,AACtB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC;ACrBH,cAAc,cAAC,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,SAAS,CAAE,IAAI,CACf,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,CACzB,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,MAAM;AACtB,CAAC;ACLD,QAAQ,eAAC,CAAC,AACT,UAAU,CAAE,MAAM;AACnB,CAAC"
+  "mappings": "AAQE,yBAAyB,cAAC,CAAC,AACzB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,oBAAoB,cAAC,CAAC,AACpB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,sBAAsB,cAAC,CAAC,AACtB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC;ACXH,cAAc,cAAC,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,SAAS,CAAE,IAAI,CACf,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,CACzB,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,MAAM;AACtB,CAAC;ACfD,QAAQ,eAAC,CAAC,AACT,UAAU,CAAE,MAAM;AACnB,CAAC"
 }
