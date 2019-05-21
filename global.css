@@ -20,6 +20,10 @@ a {
 	color: inherit;
 }
 
+main {
+	padding-top: 36px;
+}
+
 code {
 	font-family: menlo, inconsolata, monospace;
 	font-size: calc(1em - 2px);
