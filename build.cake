@@ -30,7 +30,7 @@ Task("build")
             Configuration = configuration
         };
 
-        DotNetCoreBuild("./src/LetterAvatarService/LetterAvatarService.csproj", buildSettings);
+        DotNetCoreBuild("./src/LetterAvatars.Service/LetterAvatars.Service.csproj", buildSettings);
     });
 
 Task("publish")
@@ -55,7 +55,7 @@ Task("test")
             CoverletOutputName = $"results-{DateTime.UtcNow:dd-MM-yyyy-HH-mm-ss-FFF}"
         };
 
-        DotNetCoreTest("./test/LetterAvatarService.Tests/LetterAvatarService.Tests.csproj", settings, coverletSettings);
+        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings, coverletSettings);
     });
 
 Task("azure-pipelines")
@@ -72,7 +72,7 @@ Task("azure-pipelines")
             CoverletOutputName = "results"
         };
 
-        DotNetCoreTest("./test/LetterAvatarService.Tests/LetterAvatarService.Tests.csproj", settings, coverletSettings);
+        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings, coverletSettings);
     });
 
 Task("default")
@@ -88,7 +88,7 @@ public void PublishRuntime(string runtime) {
     };
 
     settings.OutputDirectory = output + "/" + runtime;
-    DotNetCorePublish("./src/LetterAvatarService/LetterAvatarService.csproj", settings);
+    DotNetCorePublish("./src/LetterAvatars.Service/LetterAvatars.Service.csproj", settings);
 
     DeleteFiles("./artifacts/**/feeds.json");
 

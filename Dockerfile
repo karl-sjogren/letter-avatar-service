@@ -16,4 +16,4 @@ RUN apt-get update && apt-get install -y \
     libgconf-2-4
 
 COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "LetterAvatarService.dll"]
+ENTRYPOINT ["dotnet", "LetterAvatars.Service.dll"]
