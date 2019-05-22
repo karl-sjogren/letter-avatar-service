@@ -1,0 +1,33 @@
+{
+    "env": {
+      "es6": true,
+      "browser": true,
+      "amd": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": false
+      }
+    },
+    "globals": {
+      "process": "writable"
+    },
+    "plugins": [
+      "svelte3"
+    ],
+    "rules": {
+      "semi": ["error", "always"],
+      "no-console": 0,
+      "no-extra-boolean-cast": 0,
+      "no-irregular-whitespace": 0,
+      "no-useless-escape": 0,
+      "block-spacing": "error",
+      "no-tabs": "error",
+      "prefer-spread": "error",
+      "space-before-blocks": "error",
+      "arrow-spacing": ["error", { "before": true, "after": true }]
+    },
+    "extends": ["eslint:recommended"]
+  }

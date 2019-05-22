@@ -1,0 +1,36 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/__sapper__/dev": true
+    },
+    "search.exclude": {
+        "**/__sapper__/**/*": true
+    },
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+    "[json]": {
+        "editor.tabSize": 2
+    },
+    "[svelte]": {
+        "editor.tabSize": 2
+    },
+    "[less]": {
+        "editor.tabSize": 2
+    },
+    "eslint.packageManager": "yarn",
+    "eslint.options": {
+        "configFile": "./.eslintrc"
+    },
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      {
+        "language": "svelte",
+        "autoFix": true
+      }
+    ],
+    "eslint.enable": true
+}
