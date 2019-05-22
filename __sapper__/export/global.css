@@ -24,13 +24,20 @@ main {
 	padding-top: 36px;
 }
 
+p {
+	max-width: 80ch;
+}
+
 code {
-	font-family: menlo, inconsolata, monospace;
+	font-family: 'Source Code Pro', menlo, inconsolata, monospace;
 	font-size: calc(1em - 2px);
 	color: #555;
 	background-color: #f0f0f0;
 	padding: 0.2em 0.4em;
 	border-radius: 2px;
+	white-space: pre;
+	display: block;
+    margin-bottom: 18px;
 }
 
 @media (min-width: 400px) {
