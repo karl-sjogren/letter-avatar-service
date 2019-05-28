@@ -6,9 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Resources\*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Remove="Resources\Roboto-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

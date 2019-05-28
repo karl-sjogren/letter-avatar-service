@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,51 +22,47 @@ namespace LetterAvatars.Service.Controllers {
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult> GetAvatar(string name, CancellationToken cancellationToken) {
-            var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 512, cancellationToken);
+        [ResponseCache(Duration = 31_536_000, Location = ResponseCacheLocation.Any)]
+        public async Task<ActionResult> GetAvatar(string name, [FromQuery] Int32 size = 512, CancellationToken cancellationToken = default) {
+            var formatExtension = GetAvatarFormat(name);
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
+            name = Path.GetFileNameWithoutExtension(name);
+
+            var buffer = await _avatarService.GenerateAvatar(name, formatExtension, 512, cancellationToken);
+
+            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(formatExtension)));
         }
 
-        [HttpGet("thumb/{name}")]
-        public async Task<ActionResult> GetAvatarThumb(string name, CancellationToken cancellationToken) {
-            var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 64, cancellationToken);
+        private string GetAvatarFormat(string name) {
+            var extension = Path.GetExtension(name).ToLowerInvariant();;
 
-            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
-        }
+            switch(extension) {
+                case ".png":
+                    return "png";
+                case ".webp":
+                    return "webp";
+                case ".svg":
+                    return "svg";
+            }
 
-        [HttpGet("mini/{name}")]
-        public async Task<ActionResult> GetAvatarMini(string name, CancellationToken cancellationToken) {
-            var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 32, cancellationToken);
-
-            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
-        }
-
-        [HttpGet("svg/{name}")]
-        public async Task<ActionResult> GetAvatarSvg(string name, CancellationToken cancellationToken) {
-            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Svg, 512, cancellationToken);
-
-            return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(AvatarFormat.Svg)));
-        }
-
-        private AvatarFormat GetAvatarFormat() {
             var acceptHeaders = Request.Headers["Accept"];
+
+            if(acceptHeaders.Any(header => header?.Contains("image/svg+xml", StringComparison.OrdinalIgnoreCase) == true))
+                return "svg";
+
             if(acceptHeaders.Any(header => header?.Contains("image/webp", StringComparison.OrdinalIgnoreCase) == true))
-                return AvatarFormat.WebP;
+                return "webp";
             
-            return AvatarFormat.Png;
+            return "png";
         }
 
-        private string GetMimeType(AvatarFormat format) {
-            switch(format) {
-                case AvatarFormat.Png:
+        private string GetMimeType(string formatExtension) {
+            switch(formatExtension) {
+                case "png":
                     return "image/png";
-                case AvatarFormat.WebP:
+                case "webp":
                     return "image/webp";
-                case AvatarFormat.Svg:
+                case "svg":
                     return "image/svg+xml";
                 default:
                     throw new InvalidOperationException("Invalid AvatarFormat specified.");

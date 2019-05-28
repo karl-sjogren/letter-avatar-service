@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.Primitives;
 using SixLabors.Shapes;
 
 namespace LetterAvatars.Generator {

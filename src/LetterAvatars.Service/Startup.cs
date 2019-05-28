@@ -29,7 +29,8 @@ namespace LetterAvatars.Service {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
-            services.AddControllers()
+            services
+                .AddControllers()
                 .AddNewtonsoftJson();
 
             services.AddResponseCompression(options => {

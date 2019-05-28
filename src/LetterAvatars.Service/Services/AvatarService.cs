@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatars.Generator;
@@ -27,28 +28,32 @@ namespace LetterAvatars.Service.Services {
             _log = log;
         }
 
-        public async Task<byte[]> GenerateAvatar(string name, AvatarFormat format, Int32 squareSize, CancellationToken cancellationToken) {
+        public async Task<byte[]> GenerateAvatar(string name, string formatExtension, Int32 squareSize, CancellationToken cancellationToken) {
             name = AvatarHelpers.CleanName(name);
 
             await _statisticsService.TrackHit(name, squareSize, cancellationToken);
 
             var backgroundColor = await _paletteProvider.GetColorForString(name, cancellationToken);
 
-            var cacheKey = GetCacheKey(name, format, squareSize, backgroundColor);
+            var cacheKey = GetCacheKey(name, formatExtension, squareSize, backgroundColor);
 
             var cachedBlob = await _cacheService.GetBlob(cacheKey, cancellationToken);
             if(cachedBlob != null)
                 return cachedBlob;
 
-            byte[] buffer = new byte[0]; // TODO Get a suitable provider
+            var generator = _avatarGenerators.FirstOrDefault(p => p.Extension.Equals(formatExtension, StringComparison.OrdinalIgnoreCase));
+            if(generator == null)
+                throw new InvalidOperationException("No generator found for extension " + formatExtension);
+
+            var buffer = await generator.GenerateAvatar(name, squareSize, Rgba32.White, backgroundColor, cancellationToken);
             
             await _cacheService.StoreBlob(cacheKey, buffer, cancellationToken);
             return buffer;
         }
 
-        private string GetCacheKey(string name, AvatarFormat format, Int32 size, Rgba32 backgroundColor) {
+        private string GetCacheKey(string name, string formatExtension, Int32 size, Rgba32 backgroundColor) {
             var letters = AvatarHelpers.GetAvatarLetters(name);
-            return $"{letters}|{format}|{size}|{backgroundColor.ToHex()}";
+            return $"{letters}|{formatExtension}|{size}|{backgroundColor.ToHex()}";
         }
     }
 }

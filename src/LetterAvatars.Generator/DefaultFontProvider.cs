@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using SixLabors.Fonts;
@@ -16,7 +17,9 @@ namespace LetterAvatars.Generator {
             if(_fontCollection.TryFind("Roboto", out var fontFamily))
                 return Task.FromResult(fontFamily);
 
-            fontFamily = _fontCollection.Install(Path.Combine("Resources", "Roboto-Regular.ttf"));
+            var assembly = typeof(DefaultFontProvider).GetTypeInfo().Assembly;
+            using(var stream = assembly.GetManifestResourceStream("LetterAvatars.Generator.Resources.Roboto-Regular.ttf"))
+                fontFamily = _fontCollection.Install(stream);
 
             return Task.FromResult(fontFamily);
         }
