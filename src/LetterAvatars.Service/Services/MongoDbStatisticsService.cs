@@ -22,7 +22,7 @@ namespace LetterAvatars.Service.Services {
             _collection = database.GetCollection<BsonDocument>("avatar-statistics");
         }
 
-        public async Task TrackHit(string name, int size, CancellationToken cancellationToken) {
+        public async Task TrackHit(string name, Int32 size, CancellationToken cancellationToken) {
             var filterBuilder = new FilterDefinitionBuilder<BsonDocument>();
             var filter = filterBuilder.And(
                 filterBuilder.Eq("name", name),

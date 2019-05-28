@@ -23,7 +23,7 @@ namespace LetterAvatars.Service.Controllers {
         [HttpGet("{name}")]
         public async Task<ActionResult> GetAvatar(string name, CancellationToken cancellationToken) {
             var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 512, 275, cancellationToken);
+            var buffer = await _avatarService.GenerateAvatar(name, format, 512, cancellationToken);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
@@ -31,7 +31,7 @@ namespace LetterAvatars.Service.Controllers {
         [HttpGet("thumb/{name}")]
         public async Task<ActionResult> GetAvatarThumb(string name, CancellationToken cancellationToken) {
             var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 64, 32, cancellationToken);
+            var buffer = await _avatarService.GenerateAvatar(name, format, 64, cancellationToken);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
@@ -39,14 +39,14 @@ namespace LetterAvatars.Service.Controllers {
         [HttpGet("mini/{name}")]
         public async Task<ActionResult> GetAvatarMini(string name, CancellationToken cancellationToken) {
             var format = GetAvatarFormat();
-            var buffer = await _avatarService.GenerateAvatar(name, format, 32, 16, cancellationToken);
+            var buffer = await _avatarService.GenerateAvatar(name, format, 32, cancellationToken);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(format)));
         }
 
         [HttpGet("svg/{name}")]
         public async Task<ActionResult> GetAvatarSvg(string name, CancellationToken cancellationToken) {
-            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Svg, 512, 275, cancellationToken);
+            var buffer = await _avatarService.GenerateAvatar(name, AvatarFormat.Svg, 512, cancellationToken);
 
             return new FileContentResult(buffer, new MediaTypeHeaderValue(GetMimeType(AvatarFormat.Svg)));
         }

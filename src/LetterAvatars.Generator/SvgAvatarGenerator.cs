@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,14 +12,16 @@ using SixLabors.Shapes;
 
 namespace LetterAvatars.Generator {
     public class SvgAvatarGenerator : ImageAvatarGeneratorBase {
-        public SvgAvatarGenerator(IFontProvider fontProvider, IPaletteProvider paletteProvider)
-            : base(fontProvider, paletteProvider) { }
+        public SvgAvatarGenerator(IFontProvider fontProvider)
+            : base(fontProvider) { }
+
+        public override string Extension => "svg";
 
         public override string MimeType => "image/svg+xml";
 
 #pragma warning disable CS1998
 
-        protected async override Task<byte[]> RenderGlyphs(IPathCollection glyphs, int squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, CancellationToken cancellationToken) {
+        protected async override Task<byte[]> RenderGlyphs(IPathCollection glyphs, Int32 squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, CancellationToken cancellationToken) {
             XNamespace ns = "http://www.w3.org/2000/svg";
             var root = new XElement(ns + "svg");
             root.SetAttributeValue("width", squareSize);
@@ -56,6 +59,7 @@ namespace LetterAvatars.Generator {
         }
 
 #pragma warning restore CS1998
+
 
         private static XElement RenderPath(Polygon polygon, Rgba32 color) {
             XNamespace ns = "http://www.w3.org/2000/svg";
