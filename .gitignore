@@ -4,3 +4,7 @@ yarn-error.log
 /cypress/screenshots/
 /__sapper__/build/
 /__sapper__/dev/
+/src/LetterAvatars.*
+/file-cache
+/test
+/tools

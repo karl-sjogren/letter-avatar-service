@@ -1,4 +1,5 @@
 <script>
+  import AvatarPreview from '../components/avatar-preview.svelte';
   export let segment;
 </script>
 
@@ -12,6 +13,7 @@
   ul {
     margin: 0;
     padding: 0;
+    display: inline-block;
   }
 
   /* clearfix */
@@ -51,6 +53,14 @@
   .brand {
     font-weight: bold;
   }
+
+  .letter-logo {
+    display: block;
+    max-width: 300px;
+    height: 56px;
+    float: right;
+    margin-top: 10px;
+  }
 </style>
 
 <nav>
@@ -68,4 +78,13 @@
       <a class={segment === 'using' ? 'selected' : ''} href="using">using</a>
     </li>
   </ul>
+  <div class="letter-logo">
+    <AvatarPreview name="L E" size="minuscule" />
+    <AvatarPreview name="T T" size="minuscule" />
+    <AvatarPreview name="E R" size="minuscule" />
+    <AvatarPreview name="A V" size="minuscule" />
+    <AvatarPreview name="A T" size="minuscule" />
+    <AvatarPreview name="A R" size="minuscule" />
+    <AvatarPreview name="S" size="minuscule" />
+  </div>
 </nav>

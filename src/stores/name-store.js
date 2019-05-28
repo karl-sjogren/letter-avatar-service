@@ -7,7 +7,7 @@ function createName() {
     interval = setInterval(() => {
       let randomName = previewNames[Math.floor(Math.random() * previewNames.length)];
       set(randomName);
-    }, 500);
+    }, 1000);
 
     return () => clearInterval(interval);
   });
