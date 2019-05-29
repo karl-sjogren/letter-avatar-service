@@ -1,0 +1,14 @@
+{
+  "version": 3,
+  "file": "index.a2dfbf3e.css",
+  "sources": [
+    "../../../../../../src/components/preview-input.svelte",
+    "../../../../../../src/routes/index.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n  import { name } from '../stores/name-store.js';\n\n  export let value;\n\n  function handleFocus() {\n    name.stopRandomGeneration();\n  }\n\n  function handleChange(event) {\n    name.setName(event.srcElement.value);\n  }\n</script>\n\n<style>\n.preview-input {\n    width: 90%;\n    font-size: 2rem;\n    border-radius: 12px;\n    border: 6px solid #f0f8ff;\n    padding: 8px;\n    text-align: center\n}\n</style>\n\n<input type=\"text\" class=\"preview-input\" value={value} on:keydown={handleChange} on:focus={handleFocus} />",
+    "<script>\n  import AvatarPreview from '../components/avatar-preview.svelte';\n  import PreviewInput from '../components/preview-input.svelte';\n  import { name } from '../stores/name-store.js';\n</script>\n\n<style>\n.preview {\n\ttext-align: center\n}\n.preview-images {\n  transform: perspective(1600px) rotateY(-25deg) rotateX(50deg) rotateZ(0deg)\n}\n</style>\n\n<svelte:head>\n  <title>Letter Avatar Service</title>\n</svelte:head>\n\n<div class=\"preview\">\n  <div class=\"preview-images\">\n    <AvatarPreview name={$name} size=\"large\" />\n    <AvatarPreview name={$name} size=\"medium\" />\n    <AvatarPreview name={$name} size=\"small\" />\n    <AvatarPreview name={$name} size=\"tiny\" />\n    <AvatarPreview name={$name} size=\"minuscule\" />\n  </div>\n  <PreviewInput value={$name} />\n</div>\n"
+  ],
+  "names": [],
+  "mappings": "AAeA,cAAc,cAAC,CAAC,AACZ,KAAK,CAAE,GAAG,CACV,SAAS,CAAE,IAAI,CACf,aAAa,CAAE,IAAI,CACnB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,CACzB,OAAO,CAAE,GAAG,CACZ,UAAU,CAAE,MAAM;AACtB,CAAC;ACfD,QAAQ,eAAC,CAAC,AACT,UAAU,CAAE,MAAM;AACnB,CAAC,AACD,eAAe,eAAC,CAAC,AACf,SAAS,CAAE,YAAY,MAAM,CAAC,CAAC,QAAQ,MAAM,CAAC,CAAC,QAAQ,KAAK,CAAC,CAAC,QAAQ,IAAI,CAAC;AAC7E,CAAC"
+}

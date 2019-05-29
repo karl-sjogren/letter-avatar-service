@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "chunk.9d88fc60.css",
+  "sources": [
+    "../../../../../../src/components/avatar-preview.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n  export let size, name;\n\n  let baseUrl = 'https://letter-avatars.herokuapp.com/avatars/svg/';\n  $: url = baseUrl + encodeURIComponent(name);\n</script>\n\n<style>\n  .avatar-preview-minuscule {\n    max-width: 32px\n  }\n\n  .avatar-preview-tiny {\n    max-width: 64px\n  }\n\n  .avatar-preview-small {\n    max-width: 128px\n  }\n\n  .avatar-preview-medium {\n    max-width: 256px\n  }\n\n  .avatar-preview-large {\n    max-width: 512px\n  }\n</style>\n\n<img src={url} alt={name} class=\"avatar-preview avatar-preview-{size}\" />"
+  ],
+  "names": [],
+  "mappings": "AAQE,yBAAyB,cAAC,CAAC,AACzB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,oBAAoB,cAAC,CAAC,AACpB,SAAS,CAAE,IAAI;EACjB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,sBAAsB,cAAC,CAAC,AACtB,SAAS,CAAE,KAAK;EAClB,CAAC,AAED,qBAAqB,cAAC,CAAC,AACrB,SAAS,CAAE,KAAK;EAClB,CAAC"
+}

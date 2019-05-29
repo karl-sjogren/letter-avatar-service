@@ -1,2 +1,0 @@
-function n(){}function t(t,e=n){let o;const c=[];function f(n){if(f=n,(e=t)!=e?f==f:e!==f||e&&"object"==typeof e||"function"==typeof e){if(t=n,!o)return;c.forEach(n=>n[1]()),c.forEach(n=>n[0](t))}var e,f}return{set:f,update:function(n){f(n(t))},subscribe:function(u,i=n){const r=[u,i];return c.push(r),1===c.length&&(o=e(f)||n),u(t),()=>{const n=c.indexOf(r);-1!==n&&c.splice(n,1),0===c.length&&o()}}}}export{t as a};
-//# sourceMappingURL=chunk.7b9d3742.js.map
