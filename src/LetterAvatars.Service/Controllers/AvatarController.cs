@@ -37,23 +37,18 @@ namespace LetterAvatars.Service.Controllers {
             var extension = Path.GetExtension(name).ToLowerInvariant();;
 
             switch(extension) {
-                case ".png":
-                    return "png";
-                case ".webp":
-                    return "webp";
                 case ".svg":
                     return "svg";
+                case ".webp":
+                    return "webp";
+                case ".png":
+                    return "png";
             }
 
-            var acceptHeaders = Request.Headers["Accept"];
+            // Browsers doesn't seem to advertise svg support in the Accept header (since all the major ones have
+            // it) so we'll just fall back to it.
 
-            if(acceptHeaders.Any(header => header?.Contains("image/svg+xml", StringComparison.OrdinalIgnoreCase) == true))
-                return "svg";
-
-            if(acceptHeaders.Any(header => header?.Contains("image/webp", StringComparison.OrdinalIgnoreCase) == true))
-                return "webp";
-            
-            return "png";
+            return "svg";
         }
 
         private string GetMimeType(string formatExtension) {

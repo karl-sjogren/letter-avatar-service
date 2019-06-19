@@ -12,6 +12,14 @@ namespace LetterAvatars.Service.Services {
             _log = log;
         }
 
+        public Task StartAsync(CancellationToken cancellationToken) {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken) {
+            return Task.CompletedTask;
+        }
+
         public Task TrackHit(string name, Int32 size, CancellationToken cancellationToken) {
             return Task.CompletedTask;
         }
