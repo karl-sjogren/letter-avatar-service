@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using LetterAvatars.Service.Contracts;
@@ -11,7 +12,15 @@ namespace LetterAvatars.Service.Services {
             _log = log;
         }
 
-        public Task TrackHit(string name, int size, CancellationToken cancellationToken) {
+        public Task StartAsync(CancellationToken cancellationToken) {
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken) {
+            return Task.CompletedTask;
+        }
+
+        public Task TrackHit(string name, Int32 size, CancellationToken cancellationToken) {
             return Task.CompletedTask;
         }
     }

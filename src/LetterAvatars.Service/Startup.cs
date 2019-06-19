@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
+using LetterAvatars.Generator;
 using LetterAvatars.Service.Contracts;
 using LetterAvatars.Service.Extensions;
 using LetterAvatars.Service.Factories;
@@ -28,8 +29,8 @@ namespace LetterAvatars.Service {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
-            services.AddControllers()
-                .AddNewtonsoftJson();
+            services
+                .AddControllers();
 
             services.AddResponseCompression(options => {
                 options.Providers.Add<BrotliCompressionProvider>();
@@ -42,8 +43,11 @@ namespace LetterAvatars.Service {
             services.AddDefaultAWSOptions(awsOptions);
             services.AddAWSService<IAmazonS3>();
 
-            services.AddSingleton<IFontService, DefaultFontService>();
-            services.AddSingleton<IPaletteService, DefaultPaletteService>();
+            services.AddSingleton<IFontProvider, DefaultFontProvider>();
+            services.AddSingleton<IPaletteProvider, DefaultPaletteProvider>();
+            services.AddScoped<IAvatarGenerator, SvgAvatarGenerator>();
+            services.AddScoped<IAvatarGenerator, PngAvatarGenerator>();
+            services.AddScoped<IAvatarGenerator, WebPAvatarGenerator>();
             services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);
             services.AddScoped<IStatisticsService>(StatisticsServiceFactory.CreateInstance);
             services.AddScoped<IAvatarService, AvatarService>();

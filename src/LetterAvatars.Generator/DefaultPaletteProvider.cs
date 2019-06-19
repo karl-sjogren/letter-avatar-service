@@ -1,16 +1,15 @@
+using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
-using LetterAvatars.Service.Contracts;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace LetterAvatars.Service.Services {
-    public class DefaultPaletteService : IPaletteService {
-        private readonly ILogger<DefaultPaletteService> _log;
+namespace LetterAvatars.Generator {
+    public class DefaultPaletteProvider : PaletteProviderBase {
         private readonly Rgba32[] _palette;
 
-        public DefaultPaletteService(ILogger<DefaultPaletteService> log) {
-            _log = log;
-
+        public DefaultPaletteProvider() {
             _palette = new[] {
                 new Rgba32(171, 197, 191),
                 new Rgba32(198, 167, 215),
@@ -58,6 +57,6 @@ namespace LetterAvatars.Service.Services {
             };
         }
 
-        public Rgba32[] GetPalette(CancellationToken cancellationToken) => _palette;
+        public override Task<Rgba32[]> GetPalette(CancellationToken cancellationToken) => Task.FromResult(_palette);
     }
 }
