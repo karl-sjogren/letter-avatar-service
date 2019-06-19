@@ -30,8 +30,7 @@ namespace LetterAvatars.Service {
 
         public void ConfigureServices(IServiceCollection services) {
             services
-                .AddControllers()
-                .AddNewtonsoftJson();
+                .AddControllers();
 
             services.AddResponseCompression(options => {
                 options.Providers.Add<BrotliCompressionProvider>();
