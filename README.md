@@ -1,4 +1,4 @@
-# Letter Avatar Service [![Build Status](https://karl-sjogren.visualstudio.com/letter-avatar-service/_apis/build/status/karl-sjogren.letter-avatar-service?branchName=master)](https://karl-sjogren.visualstudio.com/letter-avatar-service/_build/latest?definitionId=3&branchName=master) [![Build Status](https://travis-ci.com/karl-sjogren/letter-avatar-service.svg?branch=master)](https://travis-ci.com/karl-sjogren/letter-avatar-service)
+# Letter Avatar Service [![Build Status](https://karl-sjogren.visualstudio.com/letter-avatar-service/_apis/build/status/karl-sjogren.letter-avatar-service?branchName=develop)](https://karl-sjogren.visualstudio.com/letter-avatar-service/_build/latest?definitionId=3&branchName=develop) [![Build Status](https://travis-ci.com/karl-sjogren/letter-avatar-service.svg?branch=develop)](https://travis-ci.com/karl-sjogren/letter-avatar-service)
 
 A microservice that generates image avatars consisting of one or two letters.
 
