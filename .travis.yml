@@ -7,7 +7,6 @@ addons:
 sudo: required
 language: csharp
 mono: none
-#dotnet: 3.0.100-preview4-011223
 script:
   - sudo snap alias dotnet-sdk.dotnet dotnet
   - dotnet build
