@@ -15,13 +15,10 @@
             "cwd": "${workspaceFolder}/src/LetterAvatars.Service",
             "stopAtEntry": false,
             "launchBrowser": {
-                "enabled": true
+                "enabled": false
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
             }
         },
         {

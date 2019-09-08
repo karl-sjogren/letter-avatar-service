@@ -57,6 +57,10 @@ namespace LetterAvatars.Generator {
             };
         }
 
+        public DefaultPaletteProvider(Rgba32[] palette) {
+            _palette = palette ?? throw new ArgumentNullException(nameof(palette));
+        }
+
         public override Task<Rgba32[]> GetPalette(CancellationToken cancellationToken) => Task.FromResult(_palette);
     }
 }

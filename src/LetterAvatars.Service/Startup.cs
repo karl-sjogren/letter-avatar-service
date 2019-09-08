@@ -4,11 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
-using LetterAvatars.Generator;
-using LetterAvatars.Service.Contracts;
 using LetterAvatars.Service.Extensions;
-using LetterAvatars.Service.Factories;
-using LetterAvatars.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,14 +39,11 @@ namespace LetterAvatars.Service {
             services.AddDefaultAWSOptions(awsOptions);
             services.AddAWSService<IAmazonS3>();
 
-            services.AddSingleton<IFontProvider, DefaultFontProvider>();
-            services.AddSingleton<IPaletteProvider, DefaultPaletteProvider>();
-            services.AddScoped<IAvatarGenerator, SvgAvatarGenerator>();
-            services.AddScoped<IAvatarGenerator, PngAvatarGenerator>();
-            services.AddScoped<IAvatarGenerator, WebPAvatarGenerator>();
-            services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);
-            services.AddScoped<IStatisticsService>(StatisticsServiceFactory.CreateInstance);
-            services.AddScoped<IAvatarService, AvatarService>();
+            services
+                .AddAvatarService()
+                .AddAvatarFont()
+                .AddAvatarPalette()
+                .AddAvatarGenerators();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
