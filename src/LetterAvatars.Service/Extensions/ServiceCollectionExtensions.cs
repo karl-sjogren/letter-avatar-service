@@ -29,15 +29,16 @@ namespace LetterAvatars.Service.Extensions {
         }
 
         public static IServiceCollection AddAvatarGenerators(this IServiceCollection services) {
-            services.AddScoped<IAvatarGenerator, SvgAvatarGenerator>();
-            services.AddScoped<IAvatarGenerator, PngAvatarGenerator>();
-            services.AddScoped<IAvatarGenerator, WebPAvatarGenerator>();
+            services.AddSingleton<IAvatarGenerator, SvgAvatarGenerator>();
+            services.AddSingleton<IAvatarGenerator, PngAvatarGenerator>();
+            services.AddSingleton<IAvatarGenerator, WebPAvatarGenerator>();
             return services;
         }
+
         public static IServiceCollection AddAvatarService(this IServiceCollection services) {
-            services.AddScoped<IAvatarService, AvatarService>();
-            services.AddScoped<IBlobCacheService>(CacheServiceFactory.CreateInstance);
-            services.AddScoped<IStatisticsService>(StatisticsServiceFactory.CreateInstance);
+            services.AddSingleton<IAvatarService, AvatarService>();
+            services.AddSingleton<IBlobCacheService>(CacheServiceFactory.CreateInstance);
+            services.AddSingleton<IStatisticsService>(StatisticsServiceFactory.CreateInstance);
             return services;
         }
     }

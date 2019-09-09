@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
 using LetterAvatars.Service.Extensions;
+using LetterAvatars.Service.Factories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -56,6 +57,8 @@ namespace LetterAvatars.Service {
             app.UseHttpsRedirection();
 
             app.UseResponseCompression();
+
+            app.UseAvatars("/avatars");
 
             app.UseRouting();
 
