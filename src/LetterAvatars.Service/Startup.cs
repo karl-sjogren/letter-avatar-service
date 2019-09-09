@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
+using LetterAvatars.AspNetCore.Extensions;
 using LetterAvatars.Service.Extensions;
 using LetterAvatars.Service.Factories;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,7 @@ namespace LetterAvatars.Service {
 
             services
                 .AddAvatarService()
+                .AddAvatarFactories()
                 .AddAvatarFont()
                 .AddAvatarPalette()
                 .AddAvatarGenerators();

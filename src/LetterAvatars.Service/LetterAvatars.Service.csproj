@@ -10,10 +10,10 @@
     <PackageReference Include="AWSSDK.S3" Version="3.3.104.23" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LetterAvatars.Generator\LetterAvatars.Generator.csproj" />
+    <ProjectReference Include="..\LetterAvatars.AspNetCore\LetterAvatars.AspNetCore.csproj" />
   </ItemGroup>
 </Project>

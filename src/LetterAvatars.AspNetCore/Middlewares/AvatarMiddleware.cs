@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using LetterAvatars.Service.Contracts;
+using LetterAvatars.AspNetCore.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
