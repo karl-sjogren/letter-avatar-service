@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Authors>Karl-Johan Sjögren</Authors>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <PackageProjectUrl>https://github.com/karl-sjogren/robots-txt-middleware</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/karl-sjogren/robots-txt-middleware/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/karl-sjogren/letter-avatar-service</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/karl-sjogren/letter-avatar-service/blob/develop/LICENSE</PackageLicenseUrl>
     <LangVersion>preview</LangVersion>
     <IncludeSymbols>true</IncludeSymbols>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
