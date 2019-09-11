@@ -3,7 +3,7 @@ WORKDIR /app
 
 # Copy everything and build
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -f netcoreapp3.0 -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
