@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -68,12 +69,12 @@ namespace LetterAvatars.Generator {
             foreach (var segment in polygon.LineSegments) {
                 if (first) {
                     first = false;
-                    sb.Append($"M{segment.EndPoint.X} {segment.EndPoint.Y}");
+                    sb.Append($"M{segment.EndPoint.X.ToString(CultureInfo.InvariantCulture)} {segment.EndPoint.Y.ToString(CultureInfo.InvariantCulture)}");
                     continue;
                 }
 
                 if (segment is LinearLineSegment lineSegment) {
-                    sb.Append($"L {lineSegment.EndPoint.X} {lineSegment.EndPoint.Y}");
+                    sb.Append($"L {lineSegment.EndPoint.X.ToString(CultureInfo.InvariantCulture)} {lineSegment.EndPoint.Y.ToString(CultureInfo.InvariantCulture)}");
                 } else if (segment is CubicBezierLineSegment bezierSegment) {
                     var fieldInfo = typeof(CubicBezierLineSegment).GetField("controlPoints", BindingFlags.NonPublic | BindingFlags.Instance);
                     var points = (PointF[])fieldInfo.GetValue(bezierSegment);
@@ -81,7 +82,7 @@ namespace LetterAvatars.Generator {
                     var p1 = points[1];
                     var p2 = points[2];
                     var p3 = points[3];
-                    sb.Append($"C {p1.X} {p1.Y} {p2.X} {p2.Y} {p3.X} {p3.Y}");
+                    sb.Append($"C {p1.X.ToString(CultureInfo.InvariantCulture)} {p1.Y.ToString(CultureInfo.InvariantCulture)} {p2.X.ToString(CultureInfo.InvariantCulture)} {p2.Y.ToString(CultureInfo.InvariantCulture)} {p3.X.ToString(CultureInfo.InvariantCulture)} {p3.Y.ToString(CultureInfo.InvariantCulture)}");
                 }
             }
 
