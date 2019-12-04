@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using LetterAvatars.Generator.Extensions;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
 using SixLabors.Shapes;
@@ -31,7 +32,7 @@ namespace LetterAvatars.Generator {
             var background = new XElement(ns + "rect");
             background.SetAttributeValue("width", "100%");
             background.SetAttributeValue("height", "100%");
-            background.SetAttributeValue("fill", "#" + backgroundColor.ToHex());
+            background.SetAttributeValue("fill", "#" + backgroundColor.ToRgbHex());
             root.Add(background);
 
             foreach(var glyph in glyphs) {
@@ -87,8 +88,8 @@ namespace LetterAvatars.Generator {
             }
 
             var path = new XElement(ns + "path");
-            path.SetAttributeValue("stroke", "#" + color.ToHex());
-            path.SetAttributeValue("fill", "#" + color.ToHex());
+            path.SetAttributeValue("stroke", "#" + color.ToRgbHex());
+            path.SetAttributeValue("fill", "#" + color.ToRgbHex());
             path.SetAttributeValue("d", sb.ToString());
             return path;
         }

@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <Authors>Karl-Johan Sjögren</Authors>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <PackageProjectUrl>https://github.com/karl-sjogren/letter-avatar-service</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/karl-sjogren/letter-avatar-service/blob/develop/LICENSE</PackageLicenseUrl>
     <LangVersion>preview</LangVersion>
