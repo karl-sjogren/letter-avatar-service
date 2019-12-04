@@ -3,7 +3,7 @@ addons:
   snaps:
   - name: dotnet-sdk
     classic: true
-    channel: latest/beta
+    channel: 3.0/stable
 sudo: required
 language: csharp
 mono: none
