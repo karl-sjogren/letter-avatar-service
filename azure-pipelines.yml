@@ -19,14 +19,6 @@ jobs:
       packageType: 'sdk'
       version: '5.0.102'
   - task: DotNetCoreCLI@2
-    displayName: 'Restore NuGet packages'
-    inputs:
-      command: 'restore'
-      projects: '$(Build.SourcesDirectory)/LetterAvatars.sln'
-      feedsToUse: 'config'
-      nugetConfigPath: '$(Build.SourcesDirectory)/nuget.config'
-      verbosityRestore: 'Minimal'
-  - task: DotNetCoreCLI@2
     displayName: 'Run tests'
     inputs:
       command: 'test'
@@ -49,14 +41,6 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '5.0.102'
-  - task: DotNetCoreCLI@2
-    displayName: 'Restore NuGet packages'
-    inputs:
-      command: 'restore'
-      projects: '$(Build.SourcesDirectory)/LetterAvatars.sln'
-      feedsToUse: 'config'
-      nugetConfigPath: '$(Build.SourcesDirectory)/nuget.config'
-      verbosityRestore: 'Minimal'
   - task: DotNetCoreCLI@2
     displayName: 'Run tests'
     inputs:
