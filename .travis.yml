@@ -2,7 +2,7 @@ dist: xenial
 addons:
   snaps:
   - name: dotnet-sdk
-    classic: true
+    confinement: classic
     channel: 5.0/stable
 sudo: required
 language: csharp
