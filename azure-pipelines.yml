@@ -26,7 +26,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '3.0.100'
+      version: '5.0.102'
   - bash: ./build.sh --target=azure-pipelines
     env:
       COREHOST_TRACE: 0
@@ -55,7 +55,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '3.0.100'
+      version: '5.0.102'
   - powershell: .\build.ps1 -Target azure-pipelines
     env:
       COREHOST_TRACE: 0
