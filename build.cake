@@ -1,8 +1,6 @@
-#addin nuget:?package=Cake.Coverlet&version=2.5.1
-
 using System.Xml.Linq;
 
-var target = Argument("target", "azure-pipelines");
+var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var output = Argument("output", "./artifacts");
 var versionSuffix = Argument<string>("versionSuffix", null);
@@ -48,14 +46,7 @@ Task("test")
             TestAdapterPath = "."
          };
 
-        var coverletSettings = new CoverletSettings {
-            CollectCoverage = true,
-            CoverletOutputFormat = CoverletOutputFormat.cobertura | CoverletOutputFormat.opencover,
-            CoverletOutputDirectory = Directory(@".\coverage\"),
-            CoverletOutputName = $"results-{DateTime.UtcNow:dd-MM-yyyy-HH-mm-ss-FFF}"
-        };
-
-        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings, coverletSettings);
+        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings);
     });
 
 Task("azure-pipelines")
@@ -65,14 +56,7 @@ Task("azure-pipelines")
             Logger = "trx;LogFileName=TestResults.trx"
          };
 
-        var coverletSettings = new CoverletSettings {
-            CollectCoverage = true,
-            CoverletOutputFormat = CoverletOutputFormat.cobertura,
-            CoverletOutputDirectory = Directory(@".\coverage\"),
-            CoverletOutputName = "results"
-        };
-
-        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings, coverletSettings);
+        DotNetCoreTest("./test/LetterAvatars.Service.Tests/LetterAvatars.Service.Tests.csproj", settings);
     });
 
 Task("default")
