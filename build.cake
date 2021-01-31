@@ -1,8 +1,8 @@
-#addin nuget:?package=Cake.Coverlet&version=2.1.2
+#addin nuget:?package=Cake.Coverlet&version=2.5.1
 
 using System.Xml.Linq;
 
-var target = Argument("target", "default");
+var target = Argument("target", "azure-pipelines");
 var configuration = Argument("configuration", "Release");
 var output = Argument("output", "./artifacts");
 var versionSuffix = Argument<string>("versionSuffix", null);
