@@ -5,9 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Shorthand.ImageSharp.WebP;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Shapes;
 
 namespace LetterAvatars.Generator {
     public class WebPAvatarGenerator : ImageAvatarGeneratorBase {
@@ -20,11 +21,12 @@ namespace LetterAvatars.Generator {
 
         protected override Task<byte[]> RenderGlyphs(IPathCollection glyphs, Int32 squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, CancellationToken cancellationToken) {
             using(var img = new Image<Rgba32>(squareSize, squareSize)) {
-                var graphicsOptions = new GraphicsOptions(true);
+                var graphicsOptions = new ShapeGraphicsOptions();
+                var brush = new SolidBrush(foregroundColor);
 
                 img.Mutate(ctx => ctx
                     .Fill(backgroundColor)
-                    .Fill(graphicsOptions, foregroundColor, glyphs));
+                    .Fill(graphicsOptions, brush, glyphs));
 
                 using(var ms = new MemoryStream()) {
                     img.SaveAsWebP(ms);

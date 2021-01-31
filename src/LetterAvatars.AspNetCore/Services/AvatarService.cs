@@ -31,7 +31,7 @@ namespace LetterAvatars.AspNetCore.Services {
             if(generator == null)
                 throw new InvalidOperationException("No generator found for extension " + formatExtension);
 
-            var buffer = await generator.GenerateAvatar(name, squareSize, Rgba32.White, backgroundColor, cancellationToken);
+            var buffer = await generator.GenerateAvatar(name, squareSize, Rgba32.ParseHex("fff"), backgroundColor, cancellationToken);
             return buffer;
         }
     }

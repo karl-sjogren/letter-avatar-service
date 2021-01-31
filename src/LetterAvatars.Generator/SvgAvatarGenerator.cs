@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using LetterAvatars.Generator.Extensions;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Primitives;
-using SixLabors.Shapes;
 
 namespace LetterAvatars.Generator {
     public class SvgAvatarGenerator : ImageAvatarGeneratorBase {

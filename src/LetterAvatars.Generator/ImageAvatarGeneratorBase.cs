@@ -1,11 +1,10 @@
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using SixLabors.Fonts;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Primitives;
-using SixLabors.Shapes;
+using Fonts = SixLabors.Fonts;
 
 namespace LetterAvatars.Generator {
     public abstract class ImageAvatarGeneratorBase : IAvatarGenerator {
@@ -27,9 +26,9 @@ namespace LetterAvatars.Generator {
 
             var fontFamily = await _fontProvider.GetFont(cancellationToken);
             var fontSize = squareSize * .55f;
-            var font = fontFamily.CreateFont(fontSize, FontStyle.Regular);
+            var font = Fonts.FontFamilyCollectionExtensions.CreateFont(fontFamily, fontSize, Fonts.FontStyle.Regular);
 
-            var glyphs = TextBuilder.GenerateGlyphs(text, new RendererOptions(font, 72));
+            var glyphs = SixLabors.ImageSharp.Drawing.TextBuilder.GenerateGlyphs(text, new Fonts.RendererOptions(font, 72));
             glyphs = glyphs.Translate(-glyphs.Bounds.Location);
 
             var textPosition = new PointF(squareSize / 2f - glyphs.Bounds.Width / 2, squareSize / 2f - glyphs.Bounds.Height / 2f);
