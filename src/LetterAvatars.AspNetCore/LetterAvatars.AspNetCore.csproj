@@ -1,17 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <Title>Letter Avatars AspNetCore</Title>
-    <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <IsPackable>true</IsPackable>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\LetterAvatars.Generator\LetterAvatars.Generator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LetterAvatars.Generator\LetterAvatars.Generator.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 </Project>

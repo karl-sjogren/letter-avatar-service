@@ -1,19 +1,18 @@
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
-using Microsoft.Extensions.Configuration;
 
-namespace LetterAvatars.Service.Extensions {
-    public static class ConfigurationExtensions {
-        public static AWSOptions GetAWSOptionsWithCredentials(this IConfiguration config) {
-            var options = config.GetAWSOptions();
+namespace LetterAvatars.Service.Extensions;
 
-            var accessKey = config["AWS:AccessKey"];
-            var secretKey = config["AWS:SecretKey"];
-            if(!string.IsNullOrWhiteSpace(accessKey) && !string.IsNullOrWhiteSpace(secretKey)) {
-                options.Credentials = new BasicAWSCredentials(accessKey, secretKey);
-            }
+public static class ConfigurationExtensions {
+    public static AWSOptions GetAWSOptionsWithCredentials(this IConfiguration config) {
+        var options = config.GetAWSOptions();
 
-            return options;
+        var accessKey = config["AWS:AccessKey"];
+        var secretKey = config["AWS:SecretKey"];
+        if(!string.IsNullOrWhiteSpace(accessKey) && !string.IsNullOrWhiteSpace(secretKey)) {
+            options.Credentials = new BasicAWSCredentials(accessKey, secretKey);
         }
+
+        return options;
     }
 }

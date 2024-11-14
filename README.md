@@ -1,4 +1,4 @@
-# Letter Avatar Service [![Azure Pipelines Status](https://karl-sjogren.visualstudio.com/letter-avatar-service/_apis/build/status/karl-sjogren.letter-avatar-service?branchName=develop)](https://karl-sjogren.visualstudio.com/letter-avatar-service/_build/latest?definitionId=3&branchName=develop) [![Travis CI Status](https://travis-ci.com/karl-sjogren/letter-avatar-service.svg?branch=develop)](https://travis-ci.com/karl-sjogren/letter-avatar-service) [![NuGet Version](https://img.shields.io/nuget/v/LetterAvatars.Generator)](https://www.nuget.org/packages/LetterAvatars.Generator/) [![NuGet Downloads](https://img.shields.io/nuget/dt/LetterAvatars.Generator)](https://www.nuget.org/packages/LetterAvatars.Generator/) 
+# Letter Avatar Service
 
 A microservice that generates image avatars consisting of one or two letters.
 

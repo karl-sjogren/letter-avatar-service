@@ -1,17 +1,10 @@
 {
     "files.exclude": {
-        "**/.git": true,
-        "**/.DS_Store": true,
-        "**/node_modules": true,
-        "**/bin": true,
-        "**/obj": true,
-    },
-    "[json]": {
-        "editor.tabSize": 2
-    },
-    "[csharp]": {
-        "editor.tabSize": 4
-    },
-    "dotnet-test-explorer.testProjectPath": "./test/**/*.csproj",
-    "dotnet-test-explorer.showCodeLens": true
-}
+      "**/.DS_Store": true,
+      "**/node_modules": true,
+      "**/bin": true,
+      "**/obj": true,
+      "**/tmp": true,
+      "**/.yarn/cache": true
+    }
+  }

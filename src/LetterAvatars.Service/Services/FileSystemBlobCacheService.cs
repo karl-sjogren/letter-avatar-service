@@ -1,61 +1,61 @@
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using System.IO.Abstractions;
 using LetterAvatars.Service.Contracts;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 
-namespace LetterAvatars.Service.Services {
-    public class FileSystemBlobCacheService : IBlobCacheService {
-        private readonly PhysicalFileProvider _fileProvider;
-        private readonly ILogger<FileSystemBlobCacheService> _log;
+namespace LetterAvatars.Service.Services;
 
-        public FileSystemBlobCacheService(IConfiguration configuration, ILogger<FileSystemBlobCacheService> log) {
-            var path = Path.GetFullPath(configuration["FileCache:Path"]);
-            if(!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+public class FileSystemBlobCacheService : IBlobCacheService {
+    private readonly IFileSystem _fileSystem;
+    private readonly PhysicalFileProvider _fileProvider;
+    private readonly ILogger<FileSystemBlobCacheService> _log;
 
-            _fileProvider = new PhysicalFileProvider(path);
-            _log = log;
+    public FileSystemBlobCacheService(IFileSystem fileSystem, IConfiguration configuration, ILogger<FileSystemBlobCacheService> log) {
+        var path = fileSystem.Path.GetFullPath(configuration["FileCache:Path"]!);
+        if(!fileSystem.Directory.Exists(path)) {
+            fileSystem.Directory.CreateDirectory(path);
         }
 
-        public async Task<byte[]> GetBlob(string key, CancellationToken cancellationToken) {
-            var path = GetCachePath(key);
+        _fileProvider = new PhysicalFileProvider(path);
+        _log = log;
+        _fileSystem = new FileSystem();
+    }
 
-            var fileInfo = _fileProvider.GetFileInfo(path);
-            if(!fileInfo.Exists)
-                return null;
-            
-            using var stream = fileInfo.CreateReadStream();
-            using var ms = new MemoryStream();
+    public async Task<byte[]?> GetBlobAsync(string key, CancellationToken cancellationToken) {
+        var path = GetCachePath(key);
 
-            await stream.CopyToAsync(ms, cancellationToken);
-            return ms.ToArray();
+        var fileInfo = _fileProvider.GetFileInfo(path);
+        if(!fileInfo.Exists)
+            return null;
+
+        await using var stream = fileInfo.CreateReadStream();
+        await using var ms = new MemoryStream();
+
+        await stream.CopyToAsync(ms, cancellationToken);
+        return ms.ToArray();
+    }
+
+    public async Task StoreBlobAsync(string key, byte[] buffer, CancellationToken cancellationToken) {
+        var path = GetCachePath(key);
+
+        var fileInfo = _fileProvider.GetFileInfo(path);
+        if(fileInfo.Exists) {
+            _fileSystem.File.Delete(fileInfo.PhysicalPath!);
         }
 
-        public async Task StoreBlob(string key, byte[] buffer, CancellationToken cancellationToken) {
-            var path = GetCachePath(key);
+        await _fileSystem.File.WriteAllBytesAsync(fileInfo.PhysicalPath!, buffer, cancellationToken);
+    }
 
-            var fileInfo = _fileProvider.GetFileInfo(path);
-            if(fileInfo.Exists)
-                File.Delete(fileInfo.PhysicalPath);
-
-            await File.WriteAllBytesAsync(fileInfo.PhysicalPath, buffer, cancellationToken);
+    private string GetCachePath(string key) {
+        if(key.Length < 6) {
+            // This shouldn't really happen since the metadata alone is more then six chars
+            return key;
         }
 
-        private string GetCachePath(string key) {
-            if(key.Length < 6) {
-                // This shouldn't really happen since the metadata alone is more then six chars
-                return key;
-            }
+        var directory = key.Substring(0, 6).Trim();
+        var fileInfo = _fileProvider.GetFileInfo(directory);
+        if(!fileInfo.Exists)
+            _fileSystem.Directory.CreateDirectory(fileInfo.PhysicalPath!);
 
-            var directory = key.Substring(0, 6).Trim();
-            var fileInfo = _fileProvider.GetFileInfo(directory);
-            if(!fileInfo.Exists)
-                Directory.CreateDirectory(fileInfo.PhysicalPath);
-
-            return Path.Join(directory, key);
-        }
+        return _fileSystem.Path.Join(directory, key);
     }
 }

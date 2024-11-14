@@ -1,8 +1,3 @@
-
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Shorthand.ImageSharp.WebP;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -10,30 +5,28 @@ using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace LetterAvatars.Generator {
-    public class WebPAvatarGenerator : ImageAvatarGeneratorBase {
-        public WebPAvatarGenerator(IFontProvider fontProvider)
-            : base(fontProvider) { }
+namespace LetterAvatars.Generator;
 
-        public override string Extension => "webp";
+public class WebPAvatarGenerator : ImageAvatarGeneratorBase {
+    public WebPAvatarGenerator(IFontProvider fontProvider)
+        : base(fontProvider) { }
 
-        public override string MimeType => "image/webp";
+    public override string Extension => "webp";
 
-        protected override Task<byte[]> RenderGlyphs(IPathCollection glyphs, Int32 squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, CancellationToken cancellationToken) {
-            using(var img = new Image<Rgba32>(squareSize, squareSize)) {
-                var graphicsOptions = new ShapeGraphicsOptions();
-                var brush = new SolidBrush(foregroundColor);
+    public override string MimeType => "image/webp";
 
-                img.Mutate(ctx => ctx
-                    .Fill(backgroundColor)
-                    .Fill(graphicsOptions, brush, glyphs));
+    protected override async Task<byte[]> RenderGlyphsAsync(IPathCollection glyphs, Int32 squareSize, Rgba32 foregroundColor, Rgba32 backgroundColor, CancellationToken cancellationToken) {
+        using(var img = new Image<Rgba32>(squareSize, squareSize)) {
+            var brush = new SolidBrush(foregroundColor);
 
-                using(var ms = new MemoryStream()) {
-                    img.SaveAsWebP(ms);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    return Task.FromResult(ms.ToArray());
-                }
-            }
+            img.Mutate(ctx => ctx
+                .Fill(backgroundColor)
+                .Fill(brush, glyphs));
+
+            await using var ms = new MemoryStream();
+            img.SaveAsWebP(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms.ToArray();
         }
     }
 }

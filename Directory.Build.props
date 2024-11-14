@@ -1,0 +1,25 @@
+<Project>
+
+  <PropertyGroup>
+    <Version>4.0.0</Version>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors> <!-- A package restored for your project has a known vulnerability. -->
+    <Deterministic>true</Deterministic>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <DeterministicSourcePaths Condition="'$(TF_BUILD)' == 'True' Or '$(CI)' == 'true'">true</DeterministicSourcePaths>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591;CS1573</NoWarn>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!--
+      Dependabot doesn't handle lock files yet and we don't want to miss out on
+      Dependabot updates. https://github.com/dependabot/dependabot-core/issues/1303
+    -->
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+</Project>
