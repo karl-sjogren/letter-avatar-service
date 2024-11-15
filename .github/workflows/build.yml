@@ -77,14 +77,17 @@ jobs:
 
   test-and-coverage-results:
     name: Publish test and coverage results
-    runs-on: ubuntu-latest
     needs: [ net-test ]
+
+    runs-on: ubuntu-latest
 
     steps:
     # While we don't use sources directly in this job the test reporter wants to check
     # some files through git so we need the sources.
     - name: Checkout sources
       uses: actions/checkout@v4
+      with:
+        clean: false
 
     - name: Download .NET tests results
       uses: actions/download-artifact@v4
@@ -100,11 +103,11 @@ jobs:
         reporter: dotnet-trx
 
     - name: Create history folder
-      run: mkdir ./coverage-history
+      run: mkdir -p ./coverage-history
       working-directory: ./
 
     - name: Download historial coverage
-      uses: dawidd6/action-download-artifact@v3.0.0
+      uses: dawidd6/action-download-artifact@v6
       with:
         # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
         # Required, if the artifact is from a different repo
@@ -113,6 +116,7 @@ jobs:
         workflow_conclusion: success
         branch: ${{ github.head_ref }}
         name: coverage-history
+        # Optional, a directory where to extract artifact(s), defaults to the current directory
         path: ./coverage-history
         check_artifacts:  true
         search_artifacts: true
@@ -124,41 +128,26 @@ jobs:
         global-json-file: global.json
 
     - name: Generate coverage report
-      uses: danielpalme/ReportGenerator-GitHub-Action@5
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
       with:
-        reports: '../**/{coverage.*.cobertura,cobertura-coverage}.xml'
+        reports: '../**/{coverage.cobertura,cobertura-coverage}.xml'
         targetdir: 'coverage-report'
         historydir: 'coverage-history'
-        reporttypes: 'Html;MarkdownSummary;MarkdownDeltaSummary;Cobertura'
+        reporttypes: 'Cobertura'
         assemblyfilters: '-xunit*'
         verbosity: 'Info'
 
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: coverage-report
-
     - name: Upload to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: coverage-report/Cobertura.xml
 
     - name: Upload coverage history
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4.3.0
       with:
         name: coverage-history
         path: coverage-history
-
-    - name: Publish code coverage summary to run
-      uses: LouisBrunner/checks-action@v1.6.2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        conclusion: ${{ job.status }}
-        name: 📝 Code coverage
-        output: "{\"summary\":\"Summary of code coverage. For more detailed information, download the full artifact from the run.\"}"
-        output_text_description_file: ./coverage-report/Summary.md
 
   net-build:
     name: .NET build
