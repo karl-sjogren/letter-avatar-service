@@ -1,0 +1,50 @@
+# Adapted version of https://github.com/hrvey/combine-prs-workflow
+# https://github.com/hrvey/combine-prs-workflow/blob/master/LICENSE
+name: 'Combine Dependabot Pull Requests'
+
+on:
+  workflow_dispatch:
+    inputs:
+      combineBranchName:
+        description: 'Name of the branch to combine pull requests into'
+        required: true
+        default: 'combined-dependabot-prs'
+      ignoreLabel:
+        description: 'Exclude pull requests with this label'
+        required: true
+        default: 'no-combine'
+
+permissions:
+  checks: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  combine-prs:
+    name: Combine pull requests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/workflows/scripts/combine-dependabot-prs.js
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/github-script@v7
+        id: create-combined-pr
+        name: Create combined pull request
+        env:
+          COMBINE_BRANCH_NAME: ${{ github.event.inputs.combineBranchName }}
+          IGNORE_LABEL: ${{ github.event.inputs.ignoreLabel }}
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { COMBINE_BRANCH_NAME, IGNORE_LABEL } = process.env
+            const inputs = {
+              combineBranchName: COMBINE_BRANCH_NAME,
+              ignoreLabel: IGNORE_LABEL
+            };
+
+            const script = require('./.github/workflows/scripts/combine-dependabot-prs.js')
+            await script({github, context, core}, inputs)

@@ -1,0 +1,51 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    groups:
+      roslynator:
+        patterns:
+          - "Roslynator*"
+      ms-codeanalysis:
+        patterns:
+          - "Microsoft.CodeAnalysis*"
+      benchmark-dotnet:
+        patterns:
+          - "BenchmarkDotNet*"
+      automapper:
+        patterns:
+          - "AutoMapper*"
+      entityframework-core:
+        patterns:
+          - "Microsoft.EntityFrameworkCore*"
+      aspnetcore:
+        patterns:
+          - "Microsoft.AspNetCore*"
+      hangfire:
+        patterns:
+          - "Hangfire*"
+      serilog:
+        patterns:
+          - "Serilog*"
+      xunit:
+        patterns:
+          - "xunit*"
+      fakeiteasy:
+        patterns:
+          - "FakeItEasy*"
+      testable-io:
+        patterns:
+          - "TestableIO*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
