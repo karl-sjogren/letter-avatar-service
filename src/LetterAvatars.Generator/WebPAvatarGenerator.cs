@@ -1,4 +1,3 @@
-using Shorthand.ImageSharp.WebP;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -24,7 +23,7 @@ public class WebPAvatarGenerator : ImageAvatarGeneratorBase {
                 .Fill(brush, glyphs));
 
             await using var ms = new MemoryStream();
-            img.SaveAsWebP(ms);
+            await img.SaveAsWebpAsync(ms, cancellationToken);
             ms.Seek(0, SeekOrigin.Begin);
             return ms.ToArray();
         }

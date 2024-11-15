@@ -8,7 +8,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Shorthand.ImageSharp.WebP" />
     <PackageReference Include="SixLabors.Fonts" />
     <PackageReference Include="SixLabors.ImageSharp" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" />
