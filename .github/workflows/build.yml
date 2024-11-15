@@ -63,6 +63,9 @@ jobs:
     - name: Restore NuGet packages
       run: dotnet restore --verbosity minimal
 
+    - name: List .NET SDKS
+      run: dotnet --list-sdks
+
     - name: Run .NET tests
       run: dotnet test --configuration Release
 
