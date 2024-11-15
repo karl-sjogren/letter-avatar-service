@@ -185,7 +185,14 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: Download artiifacts
+    - name: Checkout sources
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          global.json
+        sparse-checkout-cone-mode: false
+
+    - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
         name: packages
