@@ -1,3 +1,4 @@
+using System.IO.Abstractions;
 using Amazon.S3;
 using LetterAvatars.AspNetCore.Extensions;
 using LetterAvatars.Service.Extensions;
@@ -16,11 +17,15 @@ public class Startup {
         services
             .AddControllers();
 
+        services.AddHttpLogging(_ => { });
+
+        services.AddSingleton<IFileSystem, FileSystem>();
+
         services.AddResponseCompression(options => {
             options.Providers.Add<BrotliCompressionProvider>();
             options.Providers.Add<GzipCompressionProvider>();
             options.EnableForHttps = true;
-            options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+            options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
         });
 
         var awsOptions = Configuration.GetAWSOptionsWithCredentials();
@@ -28,7 +33,7 @@ public class Startup {
         services.AddAWSService<IAmazonS3>();
 
         services
-            .AddAvatarService()
+            .AddAvatarService(Configuration)
             .AddAvatarFactories()
             .AddAvatarFont()
             .AddAvatarPalette()
@@ -36,6 +41,8 @@ public class Startup {
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        app.UseHttpLogging();
+
         if(env.IsDevelopment()) {
             app.UseDeveloperExceptionPage();
         } else {
@@ -46,7 +53,7 @@ public class Startup {
 
         app.UseResponseCompression();
 
-        app.UseAvatars("/avatars");
+        app.UseAvatars();
 
         app.UseRouting();
 

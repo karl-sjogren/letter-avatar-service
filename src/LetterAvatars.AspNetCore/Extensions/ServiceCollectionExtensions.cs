@@ -3,6 +3,10 @@ using LetterAvatars.AspNetCore.Contracts;
 using LetterAvatars.AspNetCore.Services;
 using SixLabors.ImageSharp.PixelFormats;
 using Microsoft.Extensions.DependencyInjection;
+using LetterAvatars.AspNetCore.Middlewares;
+using Microsoft.Extensions.Options;
+using LetterAvatars.AspNetCore.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace LetterAvatars.AspNetCore.Extensions;
 
@@ -34,8 +38,14 @@ public static class ServiceCollectionExtensions {
         return services;
     }
 
-    public static IServiceCollection AddAvatarService(this IServiceCollection services) {
+    public static IServiceCollection AddAvatarService(this IServiceCollection services, IConfiguration configuration) {
         services.AddSingleton<IAvatarService, AvatarService>();
+        services.AddScoped<AvatarMiddleware>();
+
+        if(!services.Any(d => d.ServiceType == typeof(IConfigureOptions<AvatarMiddlewareOptions>))) {
+            services.AddOptions<AvatarMiddlewareOptions>().Bind(configuration.GetSection("AvatarMiddleware"));
+        }
+
         return services;
     }
 }

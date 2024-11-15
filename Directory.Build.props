@@ -4,6 +4,7 @@
     <Version>4.0.0</Version>
     <LangVersion>latest</LangVersion>
     <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors> <!-- A package restored for your project has a known vulnerability. -->
     <Deterministic>true</Deterministic>

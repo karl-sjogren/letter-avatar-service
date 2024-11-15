@@ -49,7 +49,7 @@ public class SvgAvatarGenerator : ImageAvatarGeneratorBase {
 
     private static XElement RenderPath(Polygon polygon, Rgba32 color) {
         XNamespace ns = "http://www.w3.org/2000/svg";
-        var sb = new StringBuilder();
+        var sb = new StringBuilder(256);
         var first = true;
         foreach(var segment in polygon.LineSegments) {
             if(first) {
@@ -58,19 +58,16 @@ public class SvgAvatarGenerator : ImageAvatarGeneratorBase {
                 continue;
             }
 
-            /*
             if(segment is LinearLineSegment lineSegment) {
                 sb.Append($"L {lineSegment.EndPoint.X.ToString(CultureInfo.InvariantCulture)} {lineSegment.EndPoint.Y.ToString(CultureInfo.InvariantCulture)}");
             } else if(segment is CubicBezierLineSegment bezierSegment) {
-                var fieldInfo = typeof(CubicBezierLineSegment).GetField("controlPoints", BindingFlags.NonPublic | BindingFlags.Instance);
-                var points = (PointF[])fieldInfo.GetValue(bezierSegment);
+                var points = bezierSegment.ControlPoints;
 
                 var p1 = points[1];
                 var p2 = points[2];
                 var p3 = points[3];
                 sb.Append($"C {p1.X.ToString(CultureInfo.InvariantCulture)} {p1.Y.ToString(CultureInfo.InvariantCulture)} {p2.X.ToString(CultureInfo.InvariantCulture)} {p2.Y.ToString(CultureInfo.InvariantCulture)} {p3.X.ToString(CultureInfo.InvariantCulture)} {p3.Y.ToString(CultureInfo.InvariantCulture)}");
             }
-*/
         }
 
         var path = new XElement(ns + "path");

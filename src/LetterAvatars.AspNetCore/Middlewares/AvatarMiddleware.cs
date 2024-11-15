@@ -3,25 +3,27 @@ using System.Globalization;
 using LetterAvatars.AspNetCore.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using LetterAvatars.AspNetCore.Options;
 
 namespace LetterAvatars.AspNetCore.Middlewares;
 
 public class AvatarMiddleware : IMiddleware {
-    private readonly PathString _endpoint;
     private readonly IAvatarService _avatarService;
     private readonly IFileSystem _fileSystem;
+    private readonly IOptions<AvatarMiddlewareOptions> _options;
     private readonly ILogger<AvatarMiddleware> _log;
 
-    public AvatarMiddleware(PathString endpoint, IAvatarService avatarService, IFileSystem fileSystem, ILogger<AvatarMiddleware> log) {
-        _endpoint = endpoint;
+    public AvatarMiddleware(IAvatarService avatarService, IFileSystem fileSystem, IOptions<AvatarMiddlewareOptions> options, ILogger<AvatarMiddleware> log) {
         _avatarService = avatarService;
         _log = log;
         _fileSystem = fileSystem;
+        _options = options;
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next) {
         var request = context.Request;
-        if(!request.Path.StartsWithSegments(_endpoint, out var restOfPath)) {
+        if(!request.Path.StartsWithSegments(_options.Value.Path, out var restOfPath)) {
             await next(context);
             return;
         }
