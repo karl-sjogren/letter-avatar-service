@@ -133,7 +133,7 @@ jobs:
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
       with:
-        reports: '../**/{coverage.cobertura,cobertura-coverage,cobertura.net?.0.coverage}.xml'
+        reports: '../**/{coverage.cobertura,cobertura-coverage,coverage.*.cobertura}.xml'
         targetdir: 'coverage-report'
         historydir: 'coverage-history'
         reporttypes: 'Cobertura'
