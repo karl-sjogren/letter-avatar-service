@@ -169,8 +169,11 @@ jobs:
     - name: Restore NuGet packages
       run: dotnet restore --verbosity minimal
 
-    - name: Pack project
+    - name: Pack AspNetCore project
       run: dotnet pack ./src/LetterAvatars.AspNetCore/LetterAvatars.AspNetCore.csproj --configuration Release --output artifacts
+
+    - name: Pack Generator project
+      run: dotnet pack ./src/LetterAvatars.Generator/LetterAvatars.Generator.csproj --configuration Release --output artifacts
 
     - name: Upload packages
       uses: actions/upload-artifact@v4
