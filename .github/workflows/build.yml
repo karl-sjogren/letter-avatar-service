@@ -133,7 +133,7 @@ jobs:
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
       with:
-        reports: '../**/{coverage.cobertura,cobertura-coverage}.xml'
+        reports: '../**/{coverage.cobertura,cobertura-coverage,coverage.*.cobertura}.xml'
         targetdir: 'coverage-report'
         historydir: 'coverage-history'
         reporttypes: 'Cobertura'
@@ -144,7 +144,7 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage-report/Cobertura.xml
+        files: coverage-report/Cobertura.xml
 
     - name: Upload coverage history
       uses: actions/upload-artifact@v4.3.0
@@ -169,8 +169,11 @@ jobs:
     - name: Restore NuGet packages
       run: dotnet restore --verbosity minimal
 
-    - name: Pack project
+    - name: Pack AspNetCore project
       run: dotnet pack ./src/LetterAvatars.AspNetCore/LetterAvatars.AspNetCore.csproj --configuration Release --output artifacts
+
+    - name: Pack Generator project
+      run: dotnet pack ./src/LetterAvatars.Generator/LetterAvatars.Generator.csproj --configuration Release --output artifacts
 
     - name: Upload packages
       uses: actions/upload-artifact@v4
@@ -185,7 +188,14 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: Download artiifacts
+    - name: Checkout sources
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          global.json
+        sparse-checkout-cone-mode: false
+
+    - name: Download artifacts
       uses: actions/download-artifact@v4
       with:
         name: packages
