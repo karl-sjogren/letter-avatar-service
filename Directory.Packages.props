@@ -17,7 +17,7 @@
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="8.10.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageVersion Include="Shouldly" Version="4.2.1" />
     <PackageVersion Include="SixLabors.Fonts" Version="2.0.6" />
     <PackageVersion Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
