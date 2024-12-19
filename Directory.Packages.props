@@ -2,8 +2,8 @@
   <ItemGroup>
     <GlobalPackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" />
     <GlobalPackageReference Include="Karls.Analyzers" Version="0.4.3" />
-    <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.12.9" />
-    <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="4.12.9" />
+    <GlobalPackageReference Include="Roslynator.Analyzers" Version="4.12.10" />
+    <GlobalPackageReference Include="Roslynator.Formatting.Analyzers" Version="4.12.10" />
     <GlobalPackageReference Include="TestableIO.System.IO.Abstractions.Analyzers" Version="2022.0.0" />
   </ItemGroup>
   <ItemGroup>
