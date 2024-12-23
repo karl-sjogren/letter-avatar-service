@@ -131,7 +131,7 @@ jobs:
         global-json-file: global.json
 
     - name: Generate coverage report
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.1
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.2
       with:
         reports: '../**/{coverage.cobertura,cobertura-coverage,coverage.*.cobertura}.xml'
         targetdir: 'coverage-report'
