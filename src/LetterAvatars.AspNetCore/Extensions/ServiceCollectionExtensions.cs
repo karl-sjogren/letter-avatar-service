@@ -7,6 +7,8 @@ using LetterAvatars.AspNetCore.Middlewares;
 using Microsoft.Extensions.Options;
 using LetterAvatars.AspNetCore.Options;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.IO.Abstractions;
 
 namespace LetterAvatars.AspNetCore.Extensions;
 
@@ -41,6 +43,7 @@ public static class ServiceCollectionExtensions {
     public static IServiceCollection AddAvatarService(this IServiceCollection services, IConfiguration configuration) {
         services.AddSingleton<IAvatarService, AvatarService>();
         services.AddScoped<AvatarMiddleware>();
+        services.TryAddSingleton<IFileSystem, FileSystem>();
 
         if(!services.Any(d => d.ServiceType == typeof(IConfigureOptions<AvatarMiddlewareOptions>))) {
             services.AddOptions<AvatarMiddlewareOptions>().Bind(configuration.GetSection("AvatarMiddleware"));
