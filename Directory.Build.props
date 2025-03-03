@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
