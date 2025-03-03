@@ -16,9 +16,9 @@ public class AvatarMiddleware : IMiddleware {
 
     public AvatarMiddleware(IAvatarService avatarService, IFileSystem fileSystem, IOptions<AvatarMiddlewareOptions> options, ILogger<AvatarMiddleware> log) {
         _avatarService = avatarService;
-        _log = log;
         _fileSystem = fileSystem;
         _options = options;
+        _log = log;
     }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next) {
