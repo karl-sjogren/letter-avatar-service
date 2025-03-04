@@ -15,11 +15,11 @@
     <PackageVersion Include="AspNetCore.HealthChecks.Azure.Storage.Blobs" Version="9.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="8.10.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" Condition=" '$(TargetFramework)' == 'net9.0' " />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net9.0' " />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' != 'net9.0' " />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageVersion Include="Shouldly" Version="4.2.1" />
+    <PackageVersion Include="Shouldly" Version="4.3.0" />
     <PackageVersion Include="SixLabors.Fonts" Version="[2.0.8,3)" />
     <PackageVersion Include="SixLabors.ImageSharp.Drawing" Version="[2.1.5,3)" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="[3.1.6,4)" />
