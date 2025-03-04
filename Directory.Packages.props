@@ -8,14 +8,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
-    <PackageVersion Include="AWSSDK.S3" Version="3.7.415.9" />
+    <PackageVersion Include="AWSSDK.S3" Version="3.7.415.10" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
     <PackageVersion Include="FakeItEasy" Version="8.3.0" />
     <PackageVersion Include="AspNetCore.HealthChecks.Azure.Storage.Blobs" Version="9.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="8.10.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" Condition=" '$(TargetFramework)' == 'net9.0' " />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net9.0' " />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' != 'net9.0' " />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
