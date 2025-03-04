@@ -23,8 +23,8 @@
     <PackageVersion Include="SixLabors.Fonts" Version="[2.0.8,3)" />
     <PackageVersion Include="SixLabors.ImageSharp.Drawing" Version="[2.1.5,3)" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="[3.1.6,4)" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.TestingHelpers" Version="[21.0.2,23)" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.Wrappers" Version="[21.0.2,23)" />
+    <PackageVersion Include="TestableIO.System.IO.Abstractions.TestingHelpers" Version="22.0.9" />
+    <PackageVersion Include="TestableIO.System.IO.Abstractions.Wrappers" Version="22.0.9" />
     <PackageVersion Include="XmlUnit.Core" Version="2.10.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
     <PackageVersion Include="xunit" Version="2.9.3" />
